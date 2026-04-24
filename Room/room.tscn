@@ -2,4 +2,4 @@
 
 [ext_resource type="PackedScene" uid="uid://bwmhkio64p0xp" path="res://Room/Room.blend" id="1_88gup"]
 
-[node name="Room" unique_id=1504112675 instance=ExtResource("1_88gup")]
+[node name="Room" unique_id=1090688671 instance=ExtResource("1_88gup")]

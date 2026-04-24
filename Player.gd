@@ -7,7 +7,7 @@ const JUMP_VELOCITY = 4.8
 const SENSITIVITY = 0.004
 
 #bob variables
-const BOB_FREQ = 2.4
+const BOB_FREQ = 5.4
 const BOB_AMP = 0.04
 var t_bob = 0.0
 
@@ -21,6 +21,7 @@ var gravity = 9.8
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
 
+@onready var ray_cast_3d: RayCast3D = $Head/Camera3D/RayCast3D
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -32,15 +33,30 @@ func _unhandled_input(event):
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-70), deg_to_rad(60))
 
+var last_collider: Object = null
+
+func _process(_delta: float) -> void:
+	var collider = ray_cast_3d.get_collider() if ray_cast_3d.is_colliding() else null
+	
+	if Input.is_action_just_pressed("interact") and collider != null and collider.is_in_group("interactable"):
+		collider.interact()
+	if collider != last_collider:
+		if last_collider:
+			last_collider.hover_deactivate()
+		if collider and collider.is_in_group("interactable"):
+			last_collider = collider
+			last_collider.hover_activate()
+		else:
+			last_collider = null
 
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
-	# Handle Jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+	## Handle Jump.
+	#if Input.is_action_just_pressed("jump") and is_on_floor():
+		#velocity.y = JUMP_VELOCITY
 	
 	# Handle Sprint.
 	if Input.is_action_pressed("sprint"):

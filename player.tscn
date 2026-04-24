@@ -4,20 +4,44 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
 radius = 0.275
+height = 1.3579102
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_4flbx"]
+radius = 0.275
+height = 1.355
 
 [node name="Player" type="CharacterBody3D" unique_id=285201373]
 script = ExtResource("1_4flbx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=755422008]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.32104492, 0)
 shape = SubResource("CapsuleShape3D_sh265")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=933878183]
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3253184, 0)
 mesh = SubResource("CapsuleMesh_4flbx")
 
 [node name="Head" type="Node3D" parent="." unique_id=113432113]
 
 [node name="Camera3D" type="Camera3D" parent="Head" unique_id=2063436598]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+current = true
+
+[node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D" unique_id=869644156]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+target_position = Vector3(0, -0.82, 0)
+collide_with_areas = true
+
+[node name="Label" type="Label" parent="." unique_id=2112498511]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
+text = "."

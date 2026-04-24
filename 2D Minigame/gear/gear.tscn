@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://bbht0t74ptp37"]
+
+[ext_resource type="Script" uid="uid://cutc03hclmlks" path="res://2D Minigame/gear/gear.gd" id="1_l65lw"]
+[ext_resource type="Shader" uid="uid://bj6lnvea64fh7" path="res://Game.gdshader" id="2_35pfq"]
+[ext_resource type="Texture2D" uid="uid://ysuh35lk8vur" path="res://2D Minigame/crude form/crude_form.png" id="3_vxkfp"]
+[ext_resource type="Texture2D" uid="uid://2j5niklsmg63" path="res://2D Minigame/gear/gear.png" id="4_m2nwo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gwjdr"]
+size = Vector2(160.11871, 54.835205)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_yyih5"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qjyg3"]
+noise = SubResource("FastNoiseLite_yyih5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lvtmh"]
+resource_local_to_scene = true
+shader = ExtResource("2_35pfq")
+shader_parameter/texture1 = ExtResource("3_vxkfp")
+shader_parameter/texture2 = ExtResource("4_m2nwo")
+shader_parameter/factor = 0.0
+shader_parameter/dissolve_map = SubResource("NoiseTexture2D_qjyg3")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_l65lw"]
+resource_local_to_scene = true
+load_path = "res://.godot/imported/crude_form.png-143f5dc6ca121f7a186a7df4e4a7be1c.ctex"
+
+[sub_resource type="Animation" id="Animation_elkpi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("gear:material:shader_parameter/factor")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_0yprl"]
+resource_name = "change_form"
+length = 0.3667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("gear:material:shader_parameter/factor")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.36666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wuoie"]
+_data = {
+&"RESET": SubResource("Animation_elkpi"),
+&"change_form": SubResource("Animation_0yprl")
+}
+
+[node name="gear" type="Area2D" unique_id=2122287452]
+scale = Vector2(0.45591182, 0.45591184)
+script = ExtResource("1_l65lw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2059103833]
+position = Vector2(-1.0967102, 194.11633)
+shape = SubResource("RectangleShape2D_gwjdr")
+
+[node name="gear" type="Sprite2D" parent="." unique_id=693650553]
+material = SubResource("ShaderMaterial_lvtmh")
+texture = SubResource("CompressedTexture2D_l65lw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1846392180]
+libraries/ = SubResource("AnimationLibrary_wuoie")

@@ -2,6 +2,18 @@
 
 [ext_resource type="PackedScene" uid="uid://bwmhkio64p0xp" path="res://Room/Room.blend" id="1_xkndl"]
 [ext_resource type="PackedScene" uid="uid://dxkqmufijkig6" path="res://player.tscn" id="2_u44n3"]
+[ext_resource type="PackedScene" uid="uid://decvgxu6a04ph" path="res://2D Minigame/computer/computer.tscn" id="3_u44n3"]
+[ext_resource type="Script" uid="uid://d3jccc3kleie6" path="res://2D Minigame/computer/computer.gd" id="4_0yprl"]
+[ext_resource type="Texture2D" uid="uid://dwh1owumwukip" path="res://2D Minigame/prensa.png" id="4_3mrqo"]
+[ext_resource type="PackedScene" uid="uid://by8kuy8a31jx5" path="res://Interactable/Buttons/button_blue.tscn" id="4_t88pq"]
+[ext_resource type="Shader" uid="uid://cl1ahtmkfkfp4" path="res://2D Minigame/esteira/MoverEsteira.gdshader" id="5_2vekm"]
+[ext_resource type="PackedScene" uid="uid://8k5ah3um02p4" path="res://Interactable/Buttons/button_red.tscn" id="5_r0x5m"]
+[ext_resource type="Script" uid="uid://cq3bytg7ayec0" path="res://2D Minigame/timer_spawner_gear.gd" id="5_wuoie"]
+[ext_resource type="Texture2D" uid="uid://cq2vxyrcqkfin" path="res://2D Minigame/esteira/EsteiraClip.png" id="6_2vekm"]
+[ext_resource type="Script" uid="uid://cn6ocu5fymnla" path="res://prensa.gd" id="7_gwjdr"]
+[ext_resource type="Script" uid="uid://ctvje1frukchq" path="res://2D Minigame/esteira/esteira.gd" id="7_yx171"]
+[ext_resource type="PackedScene" uid="uid://c2dshnv4nw6yd" path="res://Interactable/Levers/lever_red.tscn" id="15_qjyg3"]
+[ext_resource type="PackedScene" uid="uid://dxsg438aj6wck" path="res://Interactable/Levers/lever_green.tscn" id="16_elkpi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xkndl"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -15,6 +27,114 @@ background_mode = 2
 sky = SubResource("Sky_u44n3")
 tonemap_mode = 2
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_t88pq"]
+viewport_path = NodePath("Computer/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r0x5m"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_t88pq")
+
+[sub_resource type="QuadMesh" id="QuadMesh_t88pq"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_r0x5m")
+size = Vector2(3.456, 1.944)
+
+[sub_resource type="Animation" id="Animation_joorw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../CollisionShape2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1.0964355, 344.4109)]
+}
+
+[sub_resource type="Animation" id="Animation_3mrqo"]
+resource_name = "prensa"
+length = 0.5667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.40000004, 0.5666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 366.83838), Vector2(0, 366.83838), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.40000004, 0.5666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 2.010574), Vector2(1, 2.010574), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../CollisionShape2D:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.40000004, 0.5666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-1.0964355, 344.4109), Vector2(-1.0964355, 1078.55), Vector2(-1.0964355, 1078.55), Vector2(-1.0964355, 344.4109)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_joorw"]
+_data = {
+&"RESET": SubResource("Animation_joorw"),
+&"prensa": SubResource("Animation_3mrqo")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lvtmh"]
+size = Vector2(157.8948, 42.29608)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yx171"]
+shader = ExtResource("5_2vekm")
+shader_parameter/scroll_speed = Vector2(0, 0)
+shader_parameter/tint_color = Color(0.44827962, 0.49343228, 0.44320774, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yhmtn"]
+size = Vector2(297.342, 101.35134)
+
 [node name="Game" type="Node3D" unique_id=1933016586]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1445383312]
@@ -25,7 +145,98 @@ transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545
 shadow_enabled = true
 
 [node name="Player" parent="." unique_id=285201373 instance=ExtResource("2_u44n3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43768716, 1.2248342, 0.4251473)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43768716, 1.0556581, 0.4251473)
 
-[node name="Room" parent="." unique_id=463770188 instance=ExtResource("1_xkndl")]
+[node name="Room" parent="." unique_id=1342854916 instance=ExtResource("1_xkndl")]
 transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0, 0, 0)
+
+[node name="Computer" parent="." unique_id=1920683839 instance=ExtResource("3_u44n3")]
+transform = Transform3D(0.255, 0, 0, 0, 0.208, 0, 0, 0, 0.171, -0.18604517, 0.97767645, 1.5298882)
+script = ExtResource("4_0yprl")
+
+[node name="ComputerScreen" type="MeshInstance3D" parent="Computer" unique_id=1314224084]
+transform = Transform3D(-0.8057973, 0, -7.0445026e-08, 0, 0.9990809, 0, 8.729238e-08, 0, -0.9985081, -0.03510505, 0.27591228, -0.97898626)
+visible = false
+mesh = SubResource("QuadMesh_t88pq")
+
+[node name="Timer" type="Timer" parent="Computer" unique_id=1361310628]
+wait_time = 5.0
+script = ExtResource("5_wuoie")
+
+[node name="SubViewport" type="SubViewport" parent="Computer" unique_id=1858113723]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="prensa" type="Area2D" parent="Computer/SubViewport" unique_id=1296317367]
+position = Vector2(614, 172.99998)
+scale = Vector2(0.456, 0.331)
+script = ExtResource("7_gwjdr")
+
+[node name="prensa" type="Sprite2D" parent="Computer/SubViewport/prensa" unique_id=1350381676]
+texture = ExtResource("4_3mrqo")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Computer/SubViewport/prensa/prensa" unique_id=1291483442]
+libraries/ = SubResource("AnimationLibrary_joorw")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Computer/SubViewport/prensa/prensa" unique_id=1529592390]
+position = Vector2(0.00012207031, -710.6637)
+rotation = 3.1415925
+texture = ExtResource("4_3mrqo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Computer/SubViewport/prensa" unique_id=199553780]
+position = Vector2(-1.0964355, 344.4109)
+shape = SubResource("RectangleShape2D_lvtmh")
+
+[node name="esteira" type="Area2D" parent="Computer/SubViewport" unique_id=44573713]
+position = Vector2(581.00006, 480)
+scale = Vector2(5.7374997, 2.22)
+script = ExtResource("7_yx171")
+
+[node name="esteira" type="Sprite2D" parent="Computer/SubViewport/esteira" unique_id=353361080]
+z_index = -1
+texture_filter = 1
+texture_repeat = 2
+material = SubResource("ShaderMaterial_yx171")
+position = Vector2(3.398685, 0)
+scale = Vector2(1.3917212, 1.0000001)
+texture = ExtResource("6_2vekm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Computer/SubViewport/esteira" unique_id=1089296501]
+position = Vector2(6.274498, 0.22523499)
+scale = Vector2(1, 1.0000002)
+shape = SubResource("RectangleShape2D_yhmtn")
+
+[node name="Node2D" type="Node2D" parent="Computer/SubViewport" unique_id=1092060532]
+position = Vector2(-200, 480)
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Computer" unique_id=476530657]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="button_blue" parent="." unique_id=1554912145 instance=ExtResource("4_t88pq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.17643458, 0.5422572, 1.1226478)
+metadata/_edit_group_ = true
+
+[node name="button_red" parent="." unique_id=2098842949 instance=ExtResource("5_r0x5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.281, 0.4399668, 1.443)
+metadata/_edit_group_ = true
+
+[node name="lever_red" parent="." unique_id=1769844084 instance=ExtResource("15_qjyg3")]
+transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 0.24612659, 0.85453814, -1.480133)
+is_enabled = false
+
+[node name="lever_green" parent="." unique_id=511064839 instance=ExtResource("16_elkpi")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.28000984, 0.855, -1.48)
+
+[connection signal="timeout" from="Computer/Timer" to="Computer/Timer" method="_on_timeout"]
+[connection signal="area_entered" from="Computer/SubViewport/prensa" to="Computer/SubViewport/prensa" method="_on_area_entered"]
+[connection signal="interacted" from="button_blue" to="Computer/SubViewport/prensa" method="_on_button_blue_interacted"]
+[connection signal="interacted" from="button_red" to="Computer/SubViewport/esteira" method="_on_button_red_interacted"]
+[connection signal="interacted" from="lever_red" to="Computer/Timer" method="start_timer"]
+[connection signal="interacted" from="lever_red" to="Computer/SubViewport/esteira" method="_on_lever_base_interacted"]
+[connection signal="interacted" from="lever_green" to="Computer" method="_on_lever_green_interacted"]
+[connection signal="interacted" from="lever_green" to="lever_red" method="activate"]
