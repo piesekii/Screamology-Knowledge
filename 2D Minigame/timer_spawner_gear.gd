@@ -3,8 +3,12 @@ extends Timer
 
 const GEAR = preload("uid://bbht0t74ptp37")
 
-@onready var sub_viewport: SubViewport = $"../SubViewport"
+@export var sub_viewport: SubViewport
+func _ready() -> void:
+	GlobalScript.sleep_signal.connect(_reset_sleep)
 
+func _reset_sleep() -> void:
+	stop()
 func start_timer() -> void:
 	start()
 

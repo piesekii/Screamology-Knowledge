@@ -1,0 +1,165 @@
+[gd_scene format=3 uid="uid://bm85lumoggnyr"]
+
+[ext_resource type="Script" uid="uid://cn6ocu5fymnla" path="res://2D Minigame/prensa.gd" id="1_veylk"]
+[ext_resource type="Texture2D" uid="uid://dwh1owumwukip" path="res://2D Minigame/prensa.png" id="2_xqfad"]
+[ext_resource type="Script" uid="uid://ctvje1frukchq" path="res://2D Minigame/esteira/esteira.gd" id="3_54sam"]
+[ext_resource type="Shader" uid="uid://cl1ahtmkfkfp4" path="res://2D Minigame/esteira/MoverEsteira.gdshader" id="4_w74s8"]
+[ext_resource type="Texture2D" uid="uid://cq2vxyrcqkfin" path="res://2D Minigame/esteira/EsteiraClip.png" id="5_1ay5b"]
+[ext_resource type="Script" uid="uid://cuspijw1bj6yf" path="res://2D Minigame/esteira/fim_da_esteira.gd" id="6_xqfad"]
+
+[sub_resource type="Animation" id="Animation_joorw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../CollisionShape2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1.0964355, 344.4109)]
+}
+
+[sub_resource type="Animation" id="Animation_3mrqo"]
+resource_name = "prensa"
+length = 0.5667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.40000004, 0.5666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 366.83838), Vector2(0, 366.83838), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.40000004, 0.5666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 2.010574), Vector2(1, 2.010574), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../CollisionShape2D:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.40000004, 0.5666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-1.0964355, 344.4109), Vector2(-1.0964355, 1078.55), Vector2(-1.0964355, 1078.55), Vector2(-1.0964355, 344.4109)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_joorw"]
+_data = {
+&"RESET": SubResource("Animation_joorw"),
+&"prensa": SubResource("Animation_3mrqo")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lvtmh"]
+size = Vector2(157.8948, 42.29608)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yx171"]
+shader = ExtResource("4_w74s8")
+shader_parameter/scroll_speed = Vector2(0, 0)
+shader_parameter/tint_color = Color(0.44827962, 0.49343228, 0.44320774, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yhmtn"]
+size = Vector2(297.342, 101.35134)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_veylk"]
+size = Vector2(239, 382)
+
+[node name="SubViewport" type="SubViewport" unique_id=1114381380]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="prensa" type="Area2D" parent="." unique_id=904915412]
+position = Vector2(614, 172.99998)
+scale = Vector2(0.456, 0.331)
+script = ExtResource("1_veylk")
+
+[node name="prensa" type="Sprite2D" parent="prensa" unique_id=315162200]
+texture = ExtResource("2_xqfad")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="prensa/prensa" unique_id=682149882]
+libraries/ = SubResource("AnimationLibrary_joorw")
+
+[node name="Sprite2D3" type="Sprite2D" parent="prensa/prensa" unique_id=397386475]
+position = Vector2(0.00012207031, -710.6637)
+rotation = 3.1415925
+texture = ExtResource("2_xqfad")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="prensa" unique_id=2126846871]
+position = Vector2(-1.0964355, 344.4109)
+shape = SubResource("RectangleShape2D_lvtmh")
+
+[node name="esteira" type="Area2D" parent="." unique_id=818956301]
+position = Vector2(581.00006, 480)
+scale = Vector2(5.7374997, 2.22)
+script = ExtResource("3_54sam")
+
+[node name="esteira" type="Sprite2D" parent="esteira" unique_id=1327133478]
+z_index = -1
+texture_filter = 1
+texture_repeat = 2
+material = SubResource("ShaderMaterial_yx171")
+position = Vector2(3.398685, 0)
+scale = Vector2(1.3917212, 1.0000001)
+texture = ExtResource("5_1ay5b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="esteira" unique_id=1554111194]
+position = Vector2(6.274498, 0.22523499)
+scale = Vector2(1, 1.0000002)
+shape = SubResource("RectangleShape2D_yhmtn")
+
+[node name="fim da esteira" type="Area2D" parent="." unique_id=1704728234]
+script = ExtResource("6_xqfad")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="fim da esteira" unique_id=468684499]
+position = Vector2(1345.5, 486)
+shape = SubResource("RectangleShape2D_veylk")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=912639218]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="area_entered" from="prensa" to="prensa" method="_on_area_entered"]
+[connection signal="area_entered" from="fim da esteira" to="fim da esteira" method="_on_area_entered"]

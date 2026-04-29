@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cutc03hclmlks" path="res://2D Minigame/gear/gear.gd" id="1_l65lw"]
 [ext_resource type="Shader" uid="uid://bj6lnvea64fh7" path="res://Game.gdshader" id="2_35pfq"]
 [ext_resource type="Texture2D" uid="uid://ysuh35lk8vur" path="res://2D Minigame/crude form/crude_form.png" id="3_vxkfp"]
+[ext_resource type="Texture2D" uid="uid://t03ul5ehlig7" path="res://2D Minigame/gear/gearDamaged.png" id="4_35pfq"]
 [ext_resource type="Texture2D" uid="uid://2j5niklsmg63" path="res://2D Minigame/gear/gear.png" id="4_m2nwo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gwjdr"]
@@ -17,7 +18,7 @@ noise = SubResource("FastNoiseLite_yyih5")
 resource_local_to_scene = true
 shader = ExtResource("2_35pfq")
 shader_parameter/texture1 = ExtResource("3_vxkfp")
-shader_parameter/texture2 = ExtResource("4_m2nwo")
+shader_parameter/texture2 = ExtResource("4_35pfq")
 shader_parameter/factor = 0.0
 shader_parameter/dissolve_map = SubResource("NoiseTexture2D_qjyg3")
 
@@ -39,6 +40,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("gear:material:shader_parameter/texture2")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_35pfq")]
+}
 
 [sub_resource type="Animation" id="Animation_0yprl"]
 resource_name = "change_form"
@@ -55,11 +68,52 @@ tracks/0/keys = {
 "update": 0,
 "values": [0.0, 1.0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("gear:material:shader_parameter/texture2")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_m2nwo")]
+}
+
+[sub_resource type="Animation" id="Animation_vxkfp"]
+resource_name = "change_form_damaged"
+length = 0.3667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("gear:material:shader_parameter/factor")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.36666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("gear:material:shader_parameter/texture2")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_35pfq")]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wuoie"]
 _data = {
 &"RESET": SubResource("Animation_elkpi"),
-&"change_form": SubResource("Animation_0yprl")
+&"change_form": SubResource("Animation_0yprl"),
+&"change_form_damaged": SubResource("Animation_vxkfp")
 }
 
 [node name="gear" type="Area2D" unique_id=2122287452]

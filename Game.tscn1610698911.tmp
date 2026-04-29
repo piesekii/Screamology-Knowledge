@@ -1,0 +1,700 @@
+[gd_scene format=3 uid="uid://dagwacdj6u7i1"]
+
+[ext_resource type="PackedScene" uid="uid://bwmhkio64p0xp" path="res://Room/Room.blend" id="1_xkndl"]
+[ext_resource type="PackedScene" uid="uid://dxkqmufijkig6" path="res://player.tscn" id="2_u44n3"]
+[ext_resource type="PackedScene" uid="uid://decvgxu6a04ph" path="res://2D Minigame/computer/computer.tscn" id="3_u44n3"]
+[ext_resource type="Script" uid="uid://d3jccc3kleie6" path="res://2D Minigame/computer/computer.gd" id="4_0yprl"]
+[ext_resource type="Script" uid="uid://b2k8d6ct5ae5g" path="res://2D Minigame/validator/validator.gd" id="4_elkpi"]
+[ext_resource type="PackedScene" uid="uid://by8kuy8a31jx5" path="res://Interactable/Buttons/button_blue.tscn" id="4_t88pq"]
+[ext_resource type="PackedScene" uid="uid://8k5ah3um02p4" path="res://Interactable/Buttons/button_red.tscn" id="5_r0x5m"]
+[ext_resource type="Script" uid="uid://cq3bytg7ayec0" path="res://2D Minigame/timer_spawner_gear.gd" id="5_wuoie"]
+[ext_resource type="Script" uid="uid://cn6ocu5fymnla" path="res://2D Minigame/prensa.gd" id="8_0yprl"]
+[ext_resource type="Texture2D" uid="uid://dwh1owumwukip" path="res://2D Minigame/prensa.png" id="9_wuoie"]
+[ext_resource type="Script" uid="uid://ctvje1frukchq" path="res://2D Minigame/esteira/esteira.gd" id="10_bvhbk"]
+[ext_resource type="Shader" uid="uid://cl1ahtmkfkfp4" path="res://2D Minigame/esteira/MoverEsteira.gdshader" id="11_cpsxm"]
+[ext_resource type="Texture2D" uid="uid://cq2vxyrcqkfin" path="res://2D Minigame/esteira/EsteiraClip.png" id="12_hmewc"]
+[ext_resource type="Script" uid="uid://cuspijw1bj6yf" path="res://2D Minigame/esteira/fim_da_esteira.gd" id="13_7ged1"]
+[ext_resource type="FontFile" uid="uid://dvsjj425pqcue" path="res://Room/OldNewspaperTypes.ttf" id="15_0mevm"]
+[ext_resource type="PackedScene" uid="uid://b3b37n5icmuyl" path="res://2D Minigame/validator/validator.tscn" id="15_elkpi"]
+[ext_resource type="PackedScene" uid="uid://c2dshnv4nw6yd" path="res://Interactable/Levers/lever_red.tscn" id="15_qjyg3"]
+[ext_resource type="PackedScene" uid="uid://dxsg438aj6wck" path="res://Interactable/Levers/lever_green.tscn" id="16_elkpi"]
+[ext_resource type="PackedScene" uid="uid://fh6dd511awvd" path="res://Room/bed.tscn" id="18_wuoie"]
+[ext_resource type="PackedScene" uid="uid://duichj1fidq7x" path="res://Interactable/Cards/TheWayToStartYourDay.tscn" id="19_bvhbk"]
+[ext_resource type="PackedScene" uid="uid://bbm23gp0w0al0" path="res://Room/lamp.tscn" id="20_cpsxm"]
+[ext_resource type="PackedScene" uid="uid://b2v70lsd76el5" path="res://Room/rooflamp.tscn" id="21_hmewc"]
+[ext_resource type="Script" uid="uid://da5yfsbf600yh" path="res://2D Minigame/validatorOk/okaynator.gd" id="22_0mevm"]
+[ext_resource type="PackedScene" uid="uid://bomoaa5enox6i" path="res://2D Minigame/validatorOk/okaynator.tscn" id="22_7ged1"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xkndl"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_u44n3"]
+sky_material = SubResource("ProceduralSkyMaterial_xkndl")
+
+[sub_resource type="Environment" id="Environment_sb48q"]
+sky = SubResource("Sky_u44n3")
+tonemap_mode = 2
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.6993718, 0.66082895, 0.43350953, 1)
+fog_light_energy = 0.25
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_hmewc"]
+viewport_path = NodePath("Okaynator/OkaynatorScreen/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ged1"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_hmewc")
+
+[sub_resource type="QuadMesh" id="QuadMesh_0mevm"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_7ged1")
+size = Vector2(2.695, 0.79)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_lvtmh"]
+viewport_path = NodePath("Validator/ValidatorScreen/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r0x5m"]
+resource_local_to_scene = true
+albedo_color = Color(0.8217887, 0.82178867, 0.82178867, 1)
+albedo_texture = SubResource("ViewportTexture_lvtmh")
+
+[sub_resource type="QuadMesh" id="QuadMesh_t88pq"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_r0x5m")
+size = Vector2(2.695, 0.79)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_gwjdr"]
+viewport_path = NodePath("Computer/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lvtmh"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_gwjdr")
+
+[sub_resource type="QuadMesh" id="QuadMesh_yyih5"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_lvtmh")
+size = Vector2(3.58, 2.05)
+
+[sub_resource type="Animation" id="Animation_y5ctq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../SubViewport/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.033333335),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../SubViewport/Label:theme_override_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../SubViewport/Label:theme_override_colors/font_outline_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_bisgb"]
+resource_name = "okquotaEnded"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../SubViewport/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../SubViewport/Label:theme_override_colors/font_color")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.03333336, 1, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../SubViewport/Label:theme_override_colors/font_outline_color")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.03333336, 1, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y5ctq"]
+_data = {
+&"RESET": SubResource("Animation_y5ctq"),
+&"okquotaEnded": SubResource("Animation_bisgb")
+}
+
+[sub_resource type="Animation" id="Animation_joorw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../CollisionShape2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1.0964355, 344.4109)]
+}
+
+[sub_resource type="Animation" id="Animation_3mrqo"]
+resource_name = "prensa"
+length = 0.5667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.40000004, 0.5666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 366.83838), Vector2(0, 366.83838), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.40000004, 0.5666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 2.010574), Vector2(1, 2.010574), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../CollisionShape2D:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.40000004, 0.5666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-1.0964355, 344.4109), Vector2(-1.0964355, 1078.55), Vector2(-1.0964355, 1078.55), Vector2(-1.0964355, 344.4109)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_joorw"]
+_data = {
+&"RESET": SubResource("Animation_joorw"),
+&"prensa": SubResource("Animation_3mrqo")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lvtmh"]
+size = Vector2(157.8948, 42.29608)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yx171"]
+shader = ExtResource("11_cpsxm")
+shader_parameter/scroll_speed = Vector2(0, 0)
+shader_parameter/tint_color = Color(0.44827962, 0.49343228, 0.44320774, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yhmtn"]
+size = Vector2(297.342, 101.35134)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_veylk"]
+size = Vector2(275, 382)
+
+[sub_resource type="Theme" id="Theme_w2501"]
+default_font = ExtResource("15_0mevm")
+
+[sub_resource type="Animation" id="Animation_0mevm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OmniLight3D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../lamp2/OmniLight3D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_w2501"]
+resource_name = "green"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OmniLight3D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.46666664, 0.5333333, 0.6, 0.6666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, true, false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_jsoai"]
+resource_name = "red"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../lamp2/OmniLight3D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4666667, 0.53333336, 0.6, 0.6666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, true, false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jsoai"]
+_data = {
+&"RESET": SubResource("Animation_0mevm"),
+&"green": SubResource("Animation_w2501"),
+&"red": SubResource("Animation_jsoai")
+}
+
+[sub_resource type="GDScript" id="GDScript_hmewc"]
+script/source = "extends AnimationPlayer
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	GlobalScript.lamp_ap = self
+"
+
+[sub_resource type="Animation" id="Animation_hmewc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OmniLight3D:light_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.937]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OmniLight3D:omni_attenuation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_7ged1"]
+resource_name = "rooflamp"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OmniLight3D:light_energy")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5.033334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.527, 1.737]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OmniLight3D:omni_attenuation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5.0000005),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.545, 1.2650000000000006]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0mevm"]
+_data = {
+&"RESET": SubResource("Animation_hmewc"),
+&"rooflamp": SubResource("Animation_7ged1")
+}
+
+[node name="Game" type="Node3D" unique_id=1933016586]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1445383312]
+environment = SubResource("Environment_sb48q")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=921584464]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Room" parent="." unique_id=608145518 instance=ExtResource("1_xkndl")]
+transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0, 0, 0)
+
+[node name="Okaynator" parent="." unique_id=1787163199 instance=ExtResource("22_7ged1")]
+transform = Transform3D(4.371139e-08, -1, -8.7422784e-08, 1, 4.371138e-08, 8.742278e-08, -8.742278e-08, -8.742279e-08, 1, -0.7200045, 1.0337689, 1.4485998)
+script = ExtResource("22_0mevm")
+
+[node name="OkaynatorScreen" type="MeshInstance3D" parent="Okaynator" unique_id=685027253]
+transform = Transform3D(-0.144, 4.722301e-16, -2.6877254e-08, -3.3688787e-16, 0.178, -1.7763568e-15, 2.1743395e-08, -5.3290705e-15, -0.178, -0.0021528006, 0, -0.039811373)
+mesh = SubResource("QuadMesh_0mevm")
+
+[node name="SubViewport" type="SubViewport" parent="Okaynator/OkaynatorScreen" unique_id=1948521908]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Label" type="Label" parent="Okaynator/OkaynatorScreen/SubViewport" unique_id=862209717]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -248.0
+offset_top = -227.0
+offset_right = 255.0
+offset_bottom = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 1.535)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.72433007, 0, 0.26967552, 1)
+theme_override_constants/outline_size = 13
+theme_override_font_sizes/font_size = 211
+
+[node name="ProgressBar" type="ProgressBar" parent="Okaynator/OkaynatorScreen/SubViewport" unique_id=2048943041]
+modulate = Color(0.34663484, 0.830996, 0, 1)
+offset_left = -67.0
+offset_top = 548.0
+offset_right = 497.0
+offset_bottom = 1164.0
+rotation = 4.712389
+step = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Okaynator/OkaynatorScreen" unique_id=1947479733]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Validator" parent="." unique_id=2132485407 instance=ExtResource("15_elkpi")]
+transform = Transform3D(0.16982353, 0, 0, 0, 0.16982353, 0, 0, 0, 0.16982353, -0.94346917, 0.1334733, 1.077118)
+script = ExtResource("4_elkpi")
+
+[node name="ValidatorScreen" type="MeshInstance3D" parent="Validator" unique_id=399696312]
+transform = Transform3D(-0.8057973, 0, -7.044502e-08, 0, 0.99908084, 0, 8.729237e-08, 0, -0.99850804, -1.8016453, 1.4536055, -0.8237839)
+mesh = SubResource("QuadMesh_t88pq")
+
+[node name="SubViewport" type="SubViewport" parent="Validator/ValidatorScreen" unique_id=491091882]
+transparent_bg = true
+
+[node name="Label" type="Label" parent="Validator/ValidatorScreen/SubViewport" unique_id=1673315365]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -248.0
+offset_top = -227.0
+offset_right = 255.0
+offset_bottom = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 1.535)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0.72433007, 0, 0.26967552, 1)
+theme_override_constants/outline_size = 13
+theme_override_font_sizes/font_size = 211
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Validator/ValidatorScreen" unique_id=1264812670]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Computer" parent="." unique_id=1920683839 instance=ExtResource("3_u44n3")]
+transform = Transform3D(0.255, 0, 0, 0, 0.208, 0, 0, 0, 0.171, -0.18604517, 0.97767645, 1.5298882)
+script = ExtResource("4_0yprl")
+
+[node name="ComputerScreen" type="MeshInstance3D" parent="Computer" unique_id=1314224084]
+transform = Transform3D(-0.8057973, 0, -7.0445026e-08, 0, 0.9990809, 0, 8.729238e-08, 0, -0.9985081, 0.004760027, 0.27591228, -0.97139883)
+visible = false
+mesh = SubResource("QuadMesh_yyih5")
+
+[node name="Timer" type="Timer" parent="Computer" unique_id=1361310628 node_paths=PackedStringArray("sub_viewport")]
+wait_time = 5.0
+script = ExtResource("5_wuoie")
+sub_viewport = NodePath("../SubViewport")
+
+[node name="EndedQuota" type="AnimationPlayer" parent="Computer" unique_id=263249570]
+root_node = NodePath("../SubViewportContainer")
+libraries/ = SubResource("AnimationLibrary_y5ctq")
+
+[node name="SubViewport" type="SubViewport" parent="Computer" unique_id=1114381380]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="prensa" type="Area2D" parent="Computer/SubViewport" unique_id=904915412]
+position = Vector2(614, 172.99998)
+scale = Vector2(0.456, 0.331)
+script = ExtResource("8_0yprl")
+
+[node name="prensa" type="Sprite2D" parent="Computer/SubViewport/prensa" unique_id=315162200]
+texture = ExtResource("9_wuoie")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Computer/SubViewport/prensa/prensa" unique_id=682149882]
+libraries/ = SubResource("AnimationLibrary_joorw")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Computer/SubViewport/prensa/prensa" unique_id=397386475]
+position = Vector2(0.00012207031, -710.6637)
+rotation = 3.1415925
+texture = ExtResource("9_wuoie")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Computer/SubViewport/prensa" unique_id=2126846871]
+position = Vector2(-1.0964355, 344.4109)
+shape = SubResource("RectangleShape2D_lvtmh")
+
+[node name="esteira" type="Area2D" parent="Computer/SubViewport" unique_id=818956301]
+position = Vector2(581.00006, 480)
+scale = Vector2(5.7374997, 2.22)
+script = ExtResource("10_bvhbk")
+
+[node name="esteira" type="Sprite2D" parent="Computer/SubViewport/esteira" unique_id=1327133478]
+z_index = -1
+texture_filter = 1
+texture_repeat = 2
+material = SubResource("ShaderMaterial_yx171")
+position = Vector2(3.398685, 0)
+scale = Vector2(1.3917212, 1.0000001)
+texture = ExtResource("12_hmewc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Computer/SubViewport/esteira" unique_id=1554111194]
+position = Vector2(6.274498, 0.22523499)
+scale = Vector2(1, 1.0000002)
+shape = SubResource("RectangleShape2D_yhmtn")
+
+[node name="fim da esteira" type="Area2D" parent="Computer/SubViewport" unique_id=1704728234]
+script = ExtResource("13_7ged1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Computer/SubViewport/fim da esteira" unique_id=468684499]
+position = Vector2(1463.5, 486)
+shape = SubResource("RectangleShape2D_veylk")
+
+[node name="ColorRect" type="ColorRect" parent="Computer/SubViewport" unique_id=997323658]
+z_index = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="Label" type="Label" parent="Computer/SubViewport" unique_id=201488304]
+z_index = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -573.0
+offset_top = -166.5
+offset_right = 573.0
+offset_bottom = 166.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_w2501")
+theme_override_colors/font_color = Color(1, 1, 1, 0)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_constants/line_spacing = -3
+theme_override_constants/outline_size = 34
+theme_override_font_sizes/font_size = 78
+text = "GOOD JOB
+DAILY QUOTA REACHED
+ENJOY YOU REST"
+horizontal_alignment = 1
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Computer" unique_id=476530657]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="lampAP" type="AnimationPlayer" parent="." unique_id=496529248]
+root_node = NodePath("lamp1")
+libraries/ = SubResource("AnimationLibrary_jsoai")
+script = SubResource("GDScript_hmewc")
+
+[node name="lamp1" parent="lampAP" unique_id=2107541932 instance=ExtResource("20_cpsxm")]
+transform = Transform3D(0.05, 0, 0, 0, 0.024, 0, 0, 0, 0.05, 0.13898371, 1.3411682, 1.4863657)
+layers = 524288
+
+[node name="OmniLight3D" type="OmniLight3D" parent="lampAP/lamp1" unique_id=1801347732]
+transform = Transform3D(20, 0, 0, 0, 41.666668, 0, 0, 0, 20, 0, 6.618492, 0)
+visible = false
+light_color = Color(0, 0.51478636, 0, 1)
+light_energy = 3.645
+shadow_enabled = true
+shadow_caster_mask = 4294443007
+omni_range = 9.225
+
+[node name="lamp2" parent="lampAP" unique_id=405766484 instance=ExtResource("20_cpsxm")]
+transform = Transform3D(0.05, 0, 0, 0, 0.024, 0, 0, 0, 0.05, -0.4610163, 1.3411682, 1.4863657)
+layers = 524288
+
+[node name="OmniLight3D" type="OmniLight3D" parent="lampAP/lamp2" unique_id=2045568524]
+transform = Transform3D(20, 0, 0, 0, 41.666668, 0, 0, 0, 20, 0, 6.618492, 0)
+visible = false
+light_color = Color(0.65784174, 0, 0.032828335, 1)
+light_energy = 3.645
+shadow_enabled = true
+shadow_caster_mask = 4294443007
+omni_range = 9.225
+
+[node name="Interactable" type="Node3D" parent="." unique_id=315798008]
+
+[node name="button_blue" parent="Interactable" unique_id=1554912145 instance=ExtResource("4_t88pq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.17643458, 0.5422572, 1.1226478)
+metadata/_edit_group_ = true
+
+[node name="button_red" parent="Interactable" unique_id=2098842949 instance=ExtResource("5_r0x5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.281, 0.4399668, 1.443)
+metadata/_edit_group_ = true
+
+[node name="lever_red" parent="Interactable" unique_id=1769844084 instance=ExtResource("15_qjyg3")]
+transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 0.24612659, 1.1545382, -1.480133)
+is_enabled = false
+
+[node name="lever_green" parent="Interactable" unique_id=511064839 instance=ExtResource("16_elkpi")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.28000984, 1.155, -1.48)
+
+[node name="Bed" parent="Interactable" unique_id=590706542 instance=ExtResource("18_wuoie")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.3831701, 0.3246727, -1.0364362)
+
+[node name="FirstNote" parent="Interactable" unique_id=1167910242 instance=ExtResource("19_bvhbk")]
+transform = Transform3D(-4.371138e-08, 4.3711392e-08, -1, 0.9988265, 0.04843134, -4.154309e-08, 0.04843134, -0.9988265, -4.5777096e-08, -0.16495524, 1.0220408, 1.3512456)
+
+[node name="rooflamp" parent="." unique_id=1622055945 instance=ExtResource("21_hmewc")]
+transform = Transform3D(0.06628125, 0, 0, 0, 0.17159903, 0, 0, 0, 0.06628125, -1.6428216, 2.079588, -0.030397892)
+layers = 524288
+
+[node name="OmniLight3D" parent="rooflamp" index="0" unique_id=490666278]
+transform = Transform3D(15.087223, 0, 0, 0, 5.8275385, 0, 0, 0, 15.087223, -1.4573078, 1.0004959, -0.6576571)
+light_color = Color(1.0040911, 0.65657836, 0, 1)
+light_energy = 0.937
+shadow_enabled = true
+shadow_normal_bias = 10.0
+shadow_caster_mask = 4294443007
+omni_range = 6.285
+
+[node name="lightroofAP" type="AnimationPlayer" parent="rooflamp" unique_id=402787690]
+libraries/ = SubResource("AnimationLibrary_0mevm")
+autoplay = &"rooflamp"
+
+[node name="Player" parent="." unique_id=285201373 instance=ExtResource("2_u44n3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.3, 1.2, 0)
+
+[connection signal="timeout" from="Computer/Timer" to="Computer/Timer" method="_on_timeout"]
+[connection signal="area_entered" from="Computer/SubViewport/prensa" to="Computer/SubViewport/prensa" method="_on_area_entered"]
+[connection signal="area_entered" from="Computer/SubViewport/fim da esteira" to="Computer/SubViewport/fim da esteira" method="_on_area_entered"]
+[connection signal="interacted" from="Interactable/button_blue" to="Computer/SubViewport/prensa" method="_on_button_blue_interacted"]
+[connection signal="interacted" from="Interactable/lever_red" to="Computer/Timer" method="start_timer"]
+[connection signal="interacted" from="Interactable/lever_red" to="Computer/SubViewport/esteira" method="_on_lever_base_interacted"]
+[connection signal="interacted" from="Interactable/lever_green" to="Computer" method="_on_lever_green_interacted"]
+[connection signal="interacted" from="Interactable/lever_green" to="Interactable/lever_red" method="activate"]
+
+[editable path="rooflamp"]

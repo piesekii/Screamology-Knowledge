@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dxkqmufijkig6"]
 
 [ext_resource type="Script" uid="uid://c405hhgl58whb" path="res://Player.gd" id="1_4flbx"]
+[ext_resource type="FontFile" uid="uid://dvsjj425pqcue" path="res://Room/OldNewspaperTypes.ttf" id="2_onrkg"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
 radius = 0.275
@@ -9,6 +10,441 @@ height = 1.3579102
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_4flbx"]
 radius = 0.275
 height = 1.355
+
+[sub_resource type="Shader" id="Shader_4flbx"]
+code = "shader_type canvas_item;
+
+render_mode unshaded;
+
+#define MAXCOLORS 16
+
+uniform bool enabled = true;
+uniform bool dithering = true;
+uniform int colors : hint_range(1, MAXCOLORS) = 12;
+uniform int dither_size: hint_range(1, 8) = 1;
+uniform sampler2D screen_texture : hint_screen_texture, filter_nearest;
+float dithering_pattern(ivec2 fragcoord) {
+	const float pattern[] = {
+		0.00, 0.50, 0.10, 0.65, 
+		0.75, 0.25, 0.90, 0.35, 
+		0.20, 0.70, 0.05, 0.50, 
+		0.95, 0.40, 0.80, 0.30
+	};
+	
+	int x = fragcoord.x % 4;
+	int y = fragcoord.y % 4;
+	
+	return pattern[y * 4 + x];
+}
+
+float reduce_color(float raw, float dither, int depth) {
+	float div = 1.0 / float(depth);
+	float val = 0.0;
+	int i = 0;
+
+	while (i <= MAXCOLORS)
+	{
+		if (raw > div * (float(i + 1))) {
+			i = i + 1;
+			continue;
+		}
+
+		if (raw * float(depth) - float(i) <= dither * 0.999)
+		{
+			val = div * float(i);
+		} 
+		else
+		{
+			val = div * float(i + 1);
+		}
+		return val;
+
+		i = i+1;
+	}
+
+	return val;
+}
+
+void fragment() {
+	
+	vec4 raw = texture(screen_texture, SCREEN_UV);
+	ivec2 uv = ivec2(FRAGCOORD.xy / float(dither_size));
+
+	if (enabled == true){
+		float dithering_value = 1.0;
+		if (dithering)
+		{
+			dithering_value = dithering_pattern(uv);
+		}
+		
+		COLOR.r = reduce_color(raw.r, (dithering_value - 0.5) * dithering_value + 0.5, colors - 1);
+		COLOR.g = reduce_color(raw.g, (dithering_value - 0.5) * dithering_value + 0.5, colors - 1);
+		COLOR.b = reduce_color(raw.b, (dithering_value - 0.5) * dithering_value + 0.5, colors - 1);
+
+	} else {
+		COLOR.rgb = raw.rgb;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_onrkg"]
+shader = SubResource("Shader_4flbx")
+shader_parameter/enabled = true
+shader_parameter/dithering = true
+shader_parameter/colors = 8
+shader_parameter/dither_size = 2
+
+[sub_resource type="Theme" id="Theme_onrkg"]
+default_font = ExtResource("2_onrkg")
+
+[sub_resource type="GDScript" id="GDScript_onrkg"]
+script/source = "@tool
+extends RichTextLabel
+
+const MESSAGES_SECOND_DAY: Array[Dictionary] = [
+	{ \"text\": \"You recieve the money from the job.[color=green] TY$[money][/color] \\n\\n TY$[money]\", \"amount\": 0 },
+	{ \"text\": \"But your son fell sick... [color=red]-50000[/color] \\n\\n TY$[money]\", \"amount\": -50000.0 },
+	{ \"text\": \"You had to buy medicine. [color=red]-100000[/color] \\n\\n TY$[money]\", \"amount\": -100000.0 },
+	{ \"text\": \"And you had to pay the bills. [color=red]-75000[/color] \\n\\n TY$[money]\", \"amount\": -75000.0 },
+	{ \"text\": \"You were left with TY$[money] pounds. \\n\\n TY$[money]\", \"amount\": 0.0 },
+]
+
+@onready var current_day_message = MESSAGES_SECOND_DAY
+
+var total_money  := 500000.0
+var _display_val := 500000.0
+var _step        := 0
+var _animating   := false
+
+func _ready() -> void:
+	_show_step()
+
+func get_current_day_message() -> void:
+	match GlobalScript.current_day:
+		1:
+			pass
+		2:
+			current_day_message = MESSAGES_SECOND_DAY
+
+func _next() -> void:
+	if _animating:
+		return
+	_step += 1
+	if _step < current_day_message.size():
+		_show_step()
+
+func _show_step() -> void:
+	var entry  : Dictionary = current_day_message[_step]
+	var amount : float      = float(entry[\"amount\"])
+
+	if amount != 0.0:
+		_animating = true
+		var target := total_money + amount
+		_tween_to(total_money, target, entry[\"text\"])
+		total_money = target
+	else:
+		text = _resolve(entry[\"text\"], total_money)
+
+func _tween_to(from: float, to: float, template: String) -> void:
+	var tween := create_tween()
+	tween.tween_method(
+		func(v: float) -> void:
+			_display_val = v
+			text = _resolve(template, v),
+		from, to, 1.8
+	).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+
+	tween.finished.connect(func() -> void:
+		_display_val = to
+		text = _resolve(template, to)
+		_animating = false
+	, CONNECT_ONE_SHOT)
+
+func _resolve(template: String, value: float) -> String:
+	return template.replace(\"[money]\", _format(value))
+
+func _format(value: float) -> String:
+	var s      := str(int(value))
+	var result := \"\"
+	var count  := 0
+	for i in range(s.length() - 1, -1, -1):
+		if count > 0 and count % 3 == 0:
+			result = \".\" + result
+		result = s[i] + result
+		count += 1
+	return result
+"
+
+[sub_resource type="Theme" id="Theme_i3pqv"]
+default_font = ExtResource("2_onrkg")
+
+[sub_resource type="Animation" id="Animation_i3pqv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:theme_override_colors/font_outline_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../../Label:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("..:color")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.11858138, 0.11858138, 0.11858138, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:text")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [" You have been selected through a public recruitment process to work at a major technology company of great importance to the country, in a department known as “CURADORIA.” It is an honor. You will live on company premises and send money to your family at the end of the workday. You will feel genuine pride in what you do, helping your nation advance technologically.
+This is your first day at work.
+
+[F]"]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../LabelEachDay:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../LabelEachDay:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_hqtel"]
+resource_name = "hide"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:theme_override_colors/font_color")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:theme_override_colors/font_outline_color")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.5000001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../../Label:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_sweqy"]
+resource_name = "rest"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.11764706, 0.11764706, 0.11764706, 0), Color(0.11764706, 0.11764706, 0.11764706, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../LabelEachDay:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../LabelEachDay:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_onrkg"]
+resource_name = "start"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:theme_override_colors/font_color")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:theme_override_colors/font_outline_color")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../Label:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:text")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [" You have been selected through a public recruitment process to work at a major technology company of great importance to the country, in a department known as “CURADORIA.” It is an honor. You will live on company premises and send money to your family at the end of the workday. You will feel genuine pride in what you do, helping your nation advance technologically.
+This is your first day at work.
+
+[F]"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i3pqv"]
+_data = {
+&"RESET": SubResource("Animation_i3pqv"),
+&"hide": SubResource("Animation_hqtel"),
+&"rest": SubResource("Animation_sweqy"),
+&"start": SubResource("Animation_onrkg")
+}
 
 [node name="Player" type="CharacterBody3D" unique_id=285201373]
 script = ExtResource("1_4flbx")
@@ -19,6 +455,7 @@ shape = SubResource("CapsuleShape3D_sh265")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=933878183]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3253184, 0)
+visible = false
 mesh = SubResource("CapsuleMesh_4flbx")
 
 [node name="Head" type="Node3D" parent="." unique_id=113432113]
@@ -29,9 +466,90 @@ current = true
 [node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D" unique_id=869644156]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
 target_position = Vector3(0, -0.82, 0)
+collision_mask = 3
 collide_with_areas = true
 
-[node name="Label" type="Label" parent="." unique_id=2112498511]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1694445316]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=640647444]
+material = SubResource("ShaderMaterial_onrkg")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRectNoBG" type="ColorRect" parent="CanvasLayer" unique_id=2129457401]
+z_index = -1
+offset_left = -3.0
+offset_top = -4.0
+offset_right = 1156.0
+offset_bottom = 657.0
+mouse_filter = 2
+color = Color(0.11858138, 0.11858138, 0.11858138, 1)
+
+[node name="LabelEachDay" type="RichTextLabel" parent="CanvasLayer/ColorRectNoBG" unique_id=691050203]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -421.5
+offset_top = -302.75
+offset_right = 421.5
+offset_bottom = 302.75
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_onrkg")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/normal_font_size = 37
+bbcode_enabled = true
+text = "You recieve the money from the job.[color=green] TY$500.000[/color] 
+
+ TY$500.000"
+autowrap_mode = 2
+tab_size = 3
+horizontal_alignment = 1
+script = SubResource("GDScript_onrkg")
+
+[node name="LabelText" type="Label" parent="CanvasLayer/ColorRectNoBG" unique_id=119403795]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -421.5
+offset_top = -302.75
+offset_right = 421.5
+offset_bottom = 302.75
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_i3pqv")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/font_size = 34
+text = " You have been selected through a public recruitment process to work at a major technology company of great importance to the country, in a department known as “CURADORIA.” It is an honor. You will live on company premises and send money to your family at the end of the workday. You will feel genuine pride in what you do, helping your nation advance technologically.
+This is your first day at work.
+
+[F]"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="AnimationPlayerScreen" type="AnimationPlayer" parent="CanvasLayer/ColorRectNoBG/LabelText" unique_id=1490195983]
+libraries/ = SubResource("AnimationLibrary_i3pqv")
+autoplay = &"start"
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=2112498511]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -45,3 +563,22 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.5294118)
 text = "."
+
+[node name="LabelInteract" type="Label" parent="CanvasLayer" unique_id=2001845291]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -173.0
+offset_right = 20.0
+offset_bottom = -150.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_i3pqv")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/font_size = 34

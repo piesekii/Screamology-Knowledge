@@ -2,6 +2,13 @@ extends Area2D
 
 @onready var esteira: Sprite2D = $esteira
 
+
+func _ready() -> void:
+	GlobalScript.sleep_signal.connect(_reset_sleep)
+
+func _reset_sleep() -> void:
+	activated = false
+
 var activated: bool = false:
 	set(value):
 		activated = value
