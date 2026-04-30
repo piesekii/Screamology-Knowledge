@@ -2,9 +2,13 @@
 
 [ext_resource type="Script" uid="uid://cutc03hclmlks" path="res://2D Minigame/gear/gear.gd" id="1_l65lw"]
 [ext_resource type="Shader" uid="uid://bj6lnvea64fh7" path="res://Game.gdshader" id="2_35pfq"]
+[ext_resource type="Texture2D" uid="uid://c7cygh4pvl7ef" path="res://tex_normal.png" id="2_rah1i"]
+[ext_resource type="Texture2D" uid="uid://do3pl3l1cmygt" path="res://tex_red.png" id="3_8utp6"]
 [ext_resource type="Texture2D" uid="uid://ysuh35lk8vur" path="res://2D Minigame/crude form/crude_form.png" id="3_vxkfp"]
 [ext_resource type="Texture2D" uid="uid://t03ul5ehlig7" path="res://2D Minigame/gear/gearDamaged.png" id="4_35pfq"]
 [ext_resource type="Texture2D" uid="uid://2j5niklsmg63" path="res://2D Minigame/gear/gear.png" id="4_m2nwo"]
+[ext_resource type="Texture2D" uid="uid://dn0bnmn7qlewi" path="res://tex_strikethrough.png" id="4_msyd0"]
+[ext_resource type="Texture2D" uid="uid://d23mbmw2ol8mb" path="res://tex_triangle.png" id="5_6u0xq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gwjdr"]
 size = Vector2(160.11871, 54.835205)
@@ -119,6 +123,10 @@ _data = {
 [node name="gear" type="Area2D" unique_id=2122287452]
 scale = Vector2(0.45591182, 0.45591184)
 script = ExtResource("1_l65lw")
+tex_normal = ExtResource("2_rah1i")
+tex_red = ExtResource("3_8utp6")
+tex_strikethrough = ExtResource("4_msyd0")
+tex_triangle = ExtResource("5_6u0xq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2059103833]
 position = Vector2(-1.0967102, 194.11633)

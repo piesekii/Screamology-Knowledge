@@ -455,7 +455,6 @@ shape = SubResource("CapsuleShape3D_sh265")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=933878183]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3253184, 0)
-visible = false
 mesh = SubResource("CapsuleMesh_4flbx")
 
 [node name="Head" type="Node3D" parent="." unique_id=113432113]

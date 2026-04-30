@@ -80,3 +80,4 @@ func _reset_sleep() -> void:
 		_play_pressed()
 	else:
 		animation_player.play_backwards(ANIM_PRESSED)
+		
