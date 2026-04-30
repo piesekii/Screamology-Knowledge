@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://cpqphgxgyoprh"]
+
+[ext_resource type="Texture2D" uid="uid://desgwy236ceh7" path="res://2D Minigame/gear/tex_normal.png" id="1_ma8hq"]
+[ext_resource type="Texture2D" uid="uid://bdpj2kk017pk0" path="res://2D Minigame/gear/tex_triangle.png" id="2_5q8ag"]
+[ext_resource type="Script" uid="uid://cvawvn86uicvl" path="res://2D Minigame/gear/scriptRandom.gd" id="2_we5ft"]
+[ext_resource type="Texture2D" uid="uid://bowqc4vv6nvcj" path="res://2D Minigame/gear/tex_strikethrough.png" id="3_we5ft"]
+[ext_resource type="Texture2D" uid="uid://cyac1jvakif3y" path="res://2D Minigame/gear/tex_red.png" id="4_oewti"]
+
+[sub_resource type="GDScript" id="GDScript_oewti"]
+script/source = "extends Node2D
+
+var amount_value := 0
+
+func _ready() -> void:
+	print(amount_value)
+"
+
+[node name="Node2D" type="Node2D" unique_id=1334370396]
+position = Vector2(384, 232)
+script = SubResource("GDScript_oewti")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2113820808]
+position = Vector2(-88, -88)
+texture = ExtResource("1_ma8hq")
+script = ExtResource("2_we5ft")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=437483570]
+position = Vector2(88, -88)
+texture = ExtResource("2_5q8ag")
+script = ExtResource("2_we5ft")
+
+[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=1538420699]
+position = Vector2(-88, 88)
+texture = ExtResource("3_we5ft")
+script = ExtResource("2_we5ft")
+
+[node name="Sprite2D4" type="Sprite2D" parent="." unique_id=720446275]
+position = Vector2(88, 88)
+texture = ExtResource("4_oewti")
+script = ExtResource("2_we5ft")
