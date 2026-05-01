@@ -13,7 +13,7 @@ var quota_finished := false
 signal quota_finished_signal 
 signal sleep_signal
 
-var quota_amount_needed := 10
+var quota_amount_needed := 1
 var quota_amount_reached := 0
 
 var lamp_ap : AnimationPlayer
@@ -45,11 +45,3 @@ func add_x() -> void:
 		validator_text = "X X X"
 	amount_error += 1
 	lamp_ap.play("red")
-signal enviar_pressed
-signal descartar_pressed
-
-func on_enviar() -> void:
-	enviar_pressed.emit()
-
-func on_descartar() -> void:
-	descartar_pressed.emit()
