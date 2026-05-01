@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cf2yced265gsh"]
+
+[ext_resource type="Script" uid="uid://b665td2ujb4m0" path="res://item.gd" id="1_bp1wp"]
+[ext_resource type="PackedScene" uid="uid://cc0l24qluecm6" path="res://symbol.tscn" id="2_ph0dh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l6og8"]
+
+[node name="Item" type="Area2D" unique_id=58607618 node_paths=PackedStringArray("symbols_container")]
+script = ExtResource("1_bp1wp")
+symbol_sprite_scene = ExtResource("2_ph0dh")
+symbols_container = NodePath("Symbols")
+symbol_size = 36.0
+symbol_spacing = 30.0
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=638970671]
+offset_left = -30.0
+offset_top = -50.0
+offset_right = 30.0
+offset_bottom = 50.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=695263306]
+scale = Vector2(10, 10)
+shape = SubResource("RectangleShape2D_l6og8")
+
+[node name="Symbols" type="Node2D" parent="." unique_id=420584995]
