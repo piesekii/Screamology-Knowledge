@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://c6ll3d11pkl8l"]
+
+[ext_resource type="Script" uid="uid://nsibmsu7uei8" path="res://game_over_screen.gd" id="1_gt22q"]
+
+[sub_resource type="FontFile" id="FontFile_gt22q"]
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/64/0/ascent = 0.0
+cache/0/64/0/descent = 0.0
+cache/0/64/0/underline_position = 0.0
+cache/0/64/0/underline_thickness = 0.0
+cache/0/64/0/scale = 1.0
+
+[node name="GameOverScreen" type="CanvasLayer" unique_id=953171975]
+script = ExtResource("1_gt22q")
+
+[node name="Fade" type="ColorRect" parent="." unique_id=711672006]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="GameOverLabel" type="Label" parent="." unique_id=1760747031]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -157.0
+offset_top = -44.0
+offset_right = 157.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("FontFile_gt22q")
+theme_override_font_sizes/font_size = 64
+text = "DEMITIDO"
+horizontal_alignment = 1
+vertical_alignment = 1

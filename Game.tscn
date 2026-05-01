@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cf2yced265gsh" path="res://Item.tscn" id="10_7ged1"]
 [ext_resource type="Shader" uid="uid://cl1ahtmkfkfp4" path="res://2D Minigame/esteira/MoverEsteira.gdshader" id="11_cpsxm"]
 [ext_resource type="Texture2D" uid="uid://cq2vxyrcqkfin" path="res://2D Minigame/esteira/EsteiraClip.png" id="12_hmewc"]
+[ext_resource type="Texture2D" uid="uid://cyac1jvakif3y" path="res://2D Minigame/gear/tex_red.png" id="13_7ged1"]
 [ext_resource type="FontFile" uid="uid://dvsjj425pqcue" path="res://Room/OldNewspaperTypes.ttf" id="15_0mevm"]
 [ext_resource type="PackedScene" uid="uid://b3b37n5icmuyl" path="res://2D Minigame/validator/validator.tscn" id="15_elkpi"]
 [ext_resource type="PackedScene" uid="uid://c2dshnv4nw6yd" path="res://Interactable/Levers/lever_red.tscn" id="15_qjyg3"]
@@ -81,46 +82,34 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../SubViewport/ColorRect:color")
+tracks/0/path = NodePath("../SubViewport/Label:theme_override_colors/font_color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.033333335),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 0)]
+"values": [Color(1, 1, 1, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../SubViewport/Label:theme_override_colors/font_color")
+tracks/1/path = NodePath("../SubViewport/Label:theme_override_colors/font_outline_color")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0)]
+"values": [Color(0, 0, 0, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../SubViewport/Label:theme_override_colors/font_outline_color")
+tracks/2/path = NodePath("../ComputerScreen:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("../ComputerScreen:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -133,46 +122,34 @@ length = 5.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../SubViewport/ColorRect:color")
-tracks/0/interp = 1
+tracks/0/path = NodePath("../SubViewport/Label:theme_override_colors/font_color")
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0.03333336, 1, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../SubViewport/Label:theme_override_colors/font_color")
+tracks/1/path = NodePath("../SubViewport/Label:theme_override_colors/font_outline_color")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0.03333336, 1, 5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../SubViewport/Label:theme_override_colors/font_outline_color")
-tracks/2/interp = 2
+tracks/2/path = NodePath("../ComputerScreen:visible")
+tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.03333336, 1, 5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("../ComputerScreen:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(1, 5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
@@ -185,34 +162,22 @@ length = 5.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../SubViewport/ColorRect:color")
-tracks/0/interp = 1
+tracks/0/path = NodePath("../SubViewport/Label:theme_override_colors/font_color")
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../SubViewport/Label:theme_override_colors/font_color")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0.03333336, 1, 5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../SubViewport/Label:theme_override_colors/font_outline_color")
-tracks/2/interp = 2
-tracks/2/loop_wrap = true
-tracks/2/keys = {
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../SubViewport/Label:theme_override_colors/font_outline_color")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(0.03333336, 1, 5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
@@ -391,7 +356,7 @@ transform = Transform3D(4.371139e-08, -1, -8.7422784e-08, 1, 4.371138e-08, 8.742
 script = ExtResource("22_0mevm")
 
 [node name="OkaynatorScreen" type="MeshInstance3D" parent="Okaynator" unique_id=685027253]
-transform = Transform3D(-0.144, 4.722301e-16, -2.6877254e-08, -3.3688787e-16, 0.178, -1.7763568e-15, 2.1743395e-08, -5.3290705e-15, -0.178, -0.0021528006, 0, -0.039811373)
+transform = Transform3D(-0.144, 1.3604087e-15, -2.6877254e-08, -7.809771e-16, 0.178, 0, 2.1743395e-08, -7.1054274e-15, -0.178, -0.0021528006, 0, -0.039811373)
 mesh = SubResource("QuadMesh_0mevm")
 
 [node name="SubViewport" type="SubViewport" parent="Okaynator/OkaynatorScreen" unique_id=1948521908]
@@ -428,6 +393,16 @@ rotation = 4.712389
 step = 1.0
 fill_mode = 3
 show_percentage = false
+
+[node name="GlitchOverlay" type="ColorRect" parent="Okaynator/OkaynatorScreen/SubViewport" unique_id=268565050]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Okaynator/OkaynatorScreen" unique_id=1947479733]
 anchors_preset = 15
@@ -478,6 +453,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Computer" parent="." unique_id=1920683839 instance=ExtResource("3_u44n3")]
 transform = Transform3D(0.255, 0, 0, 0, 0.208, 0, 0, 0, 0.171, -0.18604517, 0.97767645, 1.5298882)
 script = ExtResource("4_0yprl")
+glitch_chance = 1.0
 
 [node name="ComputerScreen" type="MeshInstance3D" parent="Computer" unique_id=1314224084]
 transform = Transform3D(-0.8057973, 0, -7.0445026e-08, 0, 0.9990809, 0, 8.729238e-08, 0, -0.9985081, 0.004760027, 0.27591228, -0.97139883)
@@ -519,15 +495,6 @@ position = Vector2(6.274498, 0.22523499)
 scale = Vector2(1, 1.0000002)
 shape = SubResource("RectangleShape2D_yhmtn")
 
-[node name="ColorRect" type="ColorRect" parent="Computer/SubViewport" unique_id=997323658]
-z_index = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0)
-
 [node name="Label" type="Label" parent="Computer/SubViewport" unique_id=201488304]
 z_index = 1
 anchors_preset = 8
@@ -558,6 +525,14 @@ position = Vector2(0, 480)
 
 [node name="SpawnPoint2" type="Marker2D" parent="Computer/SubViewport" unique_id=83002262]
 position = Vector2(1300, 550)
+
+[node name="GlitchOverlay" type="Sprite2D" parent="Computer/SubViewport" unique_id=892742363]
+modulate = Color(1, 0, 0, 1)
+z_index = 100
+position = Vector2(576, 324)
+scale = Vector2(10.125, 10.125)
+texture = ExtResource("13_7ged1")
+region_rect = Rect2(0, 0, 1152, 648)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Computer" unique_id=476530657]
 anchors_preset = 15
@@ -607,11 +582,16 @@ metadata/_edit_group_ = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.42069873, 0.542, 1.123)
 metadata/_edit_group_ = true
 
+[node name="lever_yellow" parent="Interactable" unique_id=511064839 instance=ExtResource("16_elkpi")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0.623, 1.155, 1.064)
+rotation_edit_mode = 1
+lever_starts_up = true
+
 [node name="lever_red" parent="Interactable" unique_id=1769844084 instance=ExtResource("15_qjyg3")]
 transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 0.24612659, 1.1545382, -1.480133)
 is_enabled = false
 
-[node name="lever_green" parent="Interactable" unique_id=511064839 instance=ExtResource("16_elkpi")]
+[node name="lever_green" parent="Interactable" unique_id=710099980 instance=ExtResource("16_elkpi")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.28000984, 1.155, -1.48)
 
 [node name="Bed" parent="Interactable" unique_id=590706542 instance=ExtResource("18_wuoie")]
@@ -640,6 +620,7 @@ autoplay = &"rooflamp"
 [node name="Player" parent="." unique_id=285201373 instance=ExtResource("2_u44n3")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.3, 1.2, 0)
 
+[connection signal="interacted" from="Interactable/lever_red" to="Computer" method="_on_lever_red_interacted"]
 [connection signal="interacted" from="Interactable/lever_green" to="Computer" method="_on_lever_green_interacted"]
 [connection signal="interacted" from="Interactable/lever_green" to="Interactable/lever_red" method="activate"]
 
