@@ -4,8 +4,8 @@
 [ext_resource type="FontFile" uid="uid://dvsjj425pqcue" path="res://Room/OldNewspaperTypes.ttf" id="2_onrkg"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
-radius = 0.275
-height = 1.3579102
+radius = 0.1694336
+height = 1.3054199
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_4flbx"]
 radius = 0.275
@@ -450,7 +450,7 @@ _data = {
 script = ExtResource("1_4flbx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=755422008]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.32104492, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.34729004, 0)
 shape = SubResource("CapsuleShape3D_sh265")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=933878183]

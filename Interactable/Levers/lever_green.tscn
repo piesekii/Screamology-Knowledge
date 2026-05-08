@@ -171,7 +171,6 @@ size = Vector3(0.2097168, 0.5015869, 0.2446289)
 
 [node name="lever" type="Area3D" unique_id=511064839 node_paths=PackedStringArray("outline") groups=["interactable"]]
 script = ExtResource("1_h1xl6")
-is_lever = true
 outline = NodePath("Lever_Handle/outline")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1277491302]

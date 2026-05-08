@@ -22,7 +22,8 @@ var _cooldown_timer: float = 0.0
 func _ready() -> void:
 	GlobalScript.quota_finished_signal.connect(hide_screen)
 	GlobalScript.sleep_signal.connect(_reset_sleep)
-	glitch_overlay.modulate.a = 0.0
+	if glitch_overlay:
+		glitch_overlay.modulate.a = 0.0
 	if lever_yellow:
 		lever_yellow.interacted.connect(_on_lever_yellow_interacted)
 		lever_yellow.is_enabled = false

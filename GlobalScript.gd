@@ -10,7 +10,7 @@ var quota_finished := false
 var quota_amount_needed := 10
 var quota_amount_reached := 0
 var lamp_ap : AnimationPlayer
-
+var HasKey := true
 # --- signals ---
 signal quota_finished_signal
 signal sleep_signal

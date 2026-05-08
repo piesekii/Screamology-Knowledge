@@ -1,75 +1,7 @@
-[gd_scene format=4 uid="uid://bomoaa5enox6i"]
-
-[ext_resource type="Texture2D" uid="uid://dgxvbwjamdxcl" path="res://Room/textures/SC097.JPG" id="1_gylsb"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2a152"]
-resource_name = "Preto"
-cull_mode = 2
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yk6ts"]
-resource_name = "Metal 01"
-cull_mode = 2
-albedo_texture = ExtResource("1_gylsb")
-roughness = 0.5
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_iudxf"]
-_surfaces = [{
-"aabb": AABB(-0.18511626, -0.055804122, -0.027377827, 0.3702327, 0.118946806, 0.0039183404),
-"format": 34896613377,
-"index_count": 6,
-"index_data": PackedByteArray("AAABAAIAAAADAAEA"),
-"name": "Preto",
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 4,
-"vertex_data": PackedByteArray("//8AAP//AAAAAP//AAAAAAAAAAD//wAA/////wAAAAA=")
-}, {
-"aabb": AABB(-0.20130026, -0.07202037, -0.058858413, 0.4026007, 0.15137932, 0.16982353),
-"format": 34896613377,
-"index_count": 84,
-"index_data": PackedByteArray("AAABAAIAAgABAAMAAAAEAAEAAgADAAUABQADAAYABwAGAAQABQAGAAcABwAEAAAAAAAIAAcABwAJAAUABwAIAAkAAAAKAAgAAgAKAAAACgALAAgABQAMAAIAAgAMAAoABQAJAAwACwAKAA0ADAANAAoACwANAA4ADAAPAA0ACQAPAAwADgANAA8ACQAQAA8ADgAPABAACwAOABAAEAAJABEACwAQABEA"),
-"name": "Metal 01",
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 18,
-"vertex_data": PackedByteArray("Sgqg5AAAAAC09ZLkdC8AALT1oOQAAAAAtPVsG1w1AABKCpLkdC8AALT1XhsAAAAASgpsG1w1AABKCl4bAAAAAAAAAAAAAAAA//8AAAAAAAAAAP//AAAAAAAAAAD//wAA/////wAAAAAAAP//t7kAAAAAJ0j//wAA/////7e5AAD//ydI//8AAP//AAD//wAA")
-}]
-blend_shape_mode = 0
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_5u25i"]
-resource_name = "Room_Cube_017"
-_surfaces = [{
-"aabb": AABB(-0.18511626, -0.055804122, -0.027377827, 0.3702327, 0.118946806, 0.0039183404),
-"attribute_data": PackedByteArray("3iwcaNQWgiPeLIIj1BYcaA=="),
-"format": 34896613399,
-"index_count": 6,
-"index_data": PackedByteArray("AAABAAIAAAADAAEA"),
-"material": SubResource("StandardMaterial3D_2a152"),
-"name": "Preto",
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 4,
-"vertex_data": PackedByteArray("//8AAP//kPoAAP//AACi+wAAAAD//wza/////wAA2tibV7q1/KiuS13F2kswO+e1")
-}, {
-"aabb": AABB(-0.20130026, -0.07202037, -0.058858413, 0.4026007, 0.15137932, 0.16982353),
-"attribute_data": PackedByteArray("a6g9maerAsprqALKp6s9mQT468tP7OOWBPjjlk/s68tc/OvLXPzjltzO68tqvfq33M76tzTC68tqvZm9p4wCyv9/+pSnjPqU/38CykGdo7PfmALK35ijs2uox7lrqALK4o0YzYyP///ijd39/3///4yP9sqpgd39qYEYzf9/9sqCnPajvp+is4Kco7MloPej///ry1z8Jpv//yabXPzry4Kco7PfmPejgpz2o0aZorM="),
-"format": 34896613399,
-"index_count": 84,
-"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAEAAYACAAGAAkACgALAAwACwAKAA0ACwANAA4ADwAQABEADwASABAAEwAUABUAFAATABYAFAAWABcAGAAZABoAGgAZABsAGAAcABkAGgAbAB0AHgAcABgAHQAbAB8AHgAfABwAHQAfAB4AIAAhACIAIAAjACEAJAAlACYAJAAnACUAKAApACoAKAArACkA"),
-"material": SubResource("StandardMaterial3D_yk6ts"),
-"name": "Metal 01",
-"primitive": 3,
-"uv_scale": Vector4(1.8038424, 1.4066894, 0, 0),
-"vertex_count": 44,
-"vertex_data": PackedByteArray("Sgqg5AAAMfm09ZLkdC/V27T1oOQAAHDvSgqS5HQvVPEAACdI//+7wv////+3uezK//8nSP//PMgAAP//t7k3zAAAAAD///zF//8AAP///MUAAP//AACW8QAAAAD/////AAAAAAAA//8AAP//t7lS4wAAJ0j//5D3/////wAAQdwAAP//t7lS4wAA//8AAJbx/////7e5trf//ydI//+Ox///AAAAAKrp//8AAP///MX/////t7my1/////8AABv7SgpeGwAAD+7//wAAAACq6bT1XhsAAI7//////wAAb9kAAAAAAACq6bT1oOQAABDuSgqg5AAAjf8AAP//AAAa+0oKXhsAACz5SgqS5HQvUPFKCqDkAAAt+UoKbBtcNeHxtPVeGwAAMPlKCmwbXDWt3EoKXhsAAG/vtPVsG1w15fG09aDkAAAt+bT1bBtcNeHxtPVeGwAALPm09ZLkdC9Q8W0g6bEuTlHf41S93IYbJL5Ia9KjLLtpgkeiLGxigoa6AGP+nP6cAGON5EJCglr/f///fKVS7QAqFfwHI2exjSBS7QAqjeRCQqnEYRrOIBEWBDUENf8c/xyMM0gHBDWvKFfB10EEtfpKIEqiuBfF+kr6SgS1pz4mvt+1XEdQVwS1Ic5goIAbHr5fINqxqsJcm5HfFU75sHggHKtAI5zkpULbMaBfoeSrQp3fIU4ePn5k")
-}]
-blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_iudxf")
+[gd_scene format=3 uid="uid://bomoaa5enox6i"]
 
 [node name="Fax_001" type="MeshInstance3D" unique_id=1787163199]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7073362, -0.4988677, 1.1007309)
-mesh = SubResource("ArrayMesh_5u25i")
 metadata/extras = {
 "ant_landscape": {}
 }

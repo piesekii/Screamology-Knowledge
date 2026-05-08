@@ -94,6 +94,7 @@ script = ExtResource("3_yub2d")
 
 [node name="Bed" type="MeshInstance3D" parent="." unique_id=590706542]
 transform = Transform3D(0.23947501, 0, 0, 0, 0.23947501, 0, 0, 0, 0.3096251, 0, 0, 0)
+visible = false
 mesh = SubResource("ArrayMesh_elv25")
 
 [node name="outline" type="MeshInstance3D" parent="Bed" unique_id=1748034936]
