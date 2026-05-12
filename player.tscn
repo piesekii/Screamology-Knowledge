@@ -11,7 +11,7 @@ height = 1.3054199
 radius = 0.275
 height = 1.355
 
-[sub_resource type="Shader" id="Shader_4flbx"]
+[sub_resource type="Shader" id="Shader_onrkg"]
 code = "shader_type canvas_item;
 
 render_mode unshaded;
@@ -87,7 +87,7 @@ void fragment() {
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_onrkg"]
-shader = SubResource("Shader_4flbx")
+shader = SubResource("Shader_onrkg")
 shader_parameter/enabled = true
 shader_parameter/dithering = true
 shader_parameter/colors = 8
@@ -420,7 +420,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 tracks/3/type = "value"
 tracks/3/imported = false

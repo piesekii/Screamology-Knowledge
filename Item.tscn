@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cf2yced265gsh"]
 
-[ext_resource type="Script" uid="uid://b665td2ujb4m0" path="res://item.gd" id="1_bp1wp"]
+[ext_resource type="Script" path="res://item.gd" id="1_bp1wp"]
 [ext_resource type="PackedScene" uid="uid://cc0l24qluecm6" path="res://symbol.tscn" id="2_ph0dh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l6og8"]
@@ -13,6 +13,7 @@ symbol_size = 36.0
 symbol_spacing = 30.0
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=638970671]
+visible = false
 offset_left = -30.0
 offset_top = -50.0
 offset_right = 30.0

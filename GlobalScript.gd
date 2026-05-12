@@ -1,5 +1,6 @@
 extends Node
 
+var counter_camera := 2
 # --- estado do jogo ---
 var current_day := 1
 var label_interact := ""
@@ -11,6 +12,7 @@ var quota_amount_needed := 10
 var quota_amount_reached := 0
 var lamp_ap : AnimationPlayer
 var HasKey := true
+var endComputerAnim : AnimationPlayer
 # --- signals ---
 signal quota_finished_signal
 signal sleep_signal
@@ -78,7 +80,8 @@ func on_descartar() -> void:
 # --- game over / reset total ---
 func _trigger_game_over() -> void:
 	game_over_signal.emit()
-	await get_tree().create_timer(2.0).timeout
+	endComputerAnim.play("red_failing")
+	await get_tree().create_timer(15.0).timeout
 	_full_reset()
 
 func _full_reset() -> void:
@@ -86,4 +89,4 @@ func _full_reset() -> void:
 	label_interact = ""
 	lamp_ap = null
 	_setup_day(1)
-	get_tree().reload_current_scene()
+	get_tree().change_scene_to_file("res://Finals/CFinal.tscn")

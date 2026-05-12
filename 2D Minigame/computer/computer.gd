@@ -5,11 +5,15 @@ extends MeshInstance3D
 @onready var lever_red = $"../Interactable/lever_red"
 @onready var lever_yellow = $"../Interactable/lever_yellow"
 @onready var glitch_overlay: Sprite2D = $SubViewport/GlitchOverlay
+@onready var lamp_ap: AnimationPlayer = $"../lampAP"
+@onready var lightroof_ap: AnimationPlayer = $"../rooflamp/lightroofAP"
+@onready var end_screen: AnimationPlayer = $"../EndScreen"
 
 # --- config da trava ---
 @export var glitch_check_interval: float = 10.0
 @export var glitch_chance: float = 0.25
 @export var cooldown_after_fix: float = 15.0
+
 
 # --- estado ---
 var minigame_active: bool = false
@@ -20,7 +24,9 @@ var _check_timer: float = 0.0
 var _cooldown_timer: float = 0.0
 
 func _ready() -> void:
+	GlobalScript.endComputerAnim = lamp_ap
 	GlobalScript.quota_finished_signal.connect(hide_screen)
+	GlobalScript.game_over_signal.connect(failure_screen)
 	GlobalScript.sleep_signal.connect(_reset_sleep)
 	if glitch_overlay:
 		glitch_overlay.modulate.a = 0.0
@@ -55,7 +61,12 @@ func _reset_sleep() -> void:
 
 func hide_screen() -> void:
 	ended_quota.play("okquotaEnded")
-
+	
+func failure_screen() -> void:
+	ended_quota.play("notokquotaEnded")
+	lightroof_ap.play("rooflamp_off")
+	await get_tree().create_timer(14.0).timeout
+	end_screen.play("end_screen")
 func _on_lever_green_interacted() -> void:
 	computer_screen.visible = true
 	lever_red.activate()

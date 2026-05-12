@@ -14,7 +14,11 @@
 [ext_resource type="Texture2D" uid="uid://d2e2f4b7pvib8" path="res://Room/textures/ST018.JPG" id="12_u2isg"]
 [ext_resource type="Shader" uid="uid://bpjh70phpifc1" path="res://Room/slowburn.gdshader" id="13_xx5jq"]
 [ext_resource type="Theme" uid="uid://bh7al00hiw6xq" path="res://ThemMenu.tres" id="14_gb4ue"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="14_xx5jq"]
 [ext_resource type="Script" uid="uid://baaucmnbvj8dh" path="res://button_menu.gd" id="15_u2isg"]
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="16_dck04"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="17_w1sat"]
+[ext_resource type="Script" uid="uid://cuffvge5ad4aa" path="res://addons/phantom_camera/scripts/resources/phantom_camera_noise_3d.gd" id="19_4qo4c"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xkndl"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -25,7 +29,6 @@ sky_material = SubResource("ProceduralSkyMaterial_xkndl")
 
 [sub_resource type="Environment" id="Environment_sb48q"]
 sky = SubResource("Sky_u44n3")
-tonemap_mode = 2
 ssr_enabled = true
 ssao_enabled = true
 ssil_enabled = true
@@ -321,8 +324,144 @@ _data = {
 &"flickering_clicked": SubResource("Animation_w1sat")
 }
 
+[sub_resource type="GDScript" id="GDScript_u2isg"]
+script/source = "extends Node3D
+
+var is_mouse_inside = false
+var last_event_pos2D = null
+var last_event_time: float = -1.0
+
+@onready var node_viewport = %SubViewport_menu
+@onready var node_quad = %screen_menu
+@onready var node_area = %Area3D
+
+@export var billboard := false
+
+func _ready():
+	node_area.mouse_entered.connect(_mouse_entered_area)
+	node_area.mouse_exited.connect(_mouse_exited_area)
+	node_area.input_event.connect(_mouse_input_event)
+
+	if !billboard:
+		set_process(false)
+
+
+func _process(_delta):
+	rotate_area_to_billboard()
+
+
+func _mouse_entered_area():
+	is_mouse_inside = true
+	
+	# viewport recebe foco apenas quando mouse está diretamente encima
+	node_viewport.gui_disable_input = false
+
+
+func _mouse_exited_area():
+	is_mouse_inside = false
+	
+	# remove foco/input quando mouse sai
+	node_viewport.gui_disable_input = true
+
+
+func _unhandled_input(event):
+	# NÃO envia input se mouse não estiver encima
+	if !is_mouse_inside:
+		return
+
+	for mouse_event in [
+		InputEventMouseButton,
+		InputEventMouseMotion,
+		InputEventScreenDrag,
+		InputEventScreenTouch
+	]:
+		if is_instance_of(event, mouse_event):
+			return
+
+	node_viewport.push_input(event)
+
+
+func _mouse_input_event(
+	_camera: Camera3D,
+	event: InputEvent,
+	event_position: Vector3,
+	_normal: Vector3,
+	_shape_idx: int
+):
+	# ignora completamente se mouse não estiver encima
+	if !is_mouse_inside:
+		return
+
+	var quad_mesh_size = node_quad.mesh.size
+	var event_pos3D = event_position
+
+	var now: float = Time.get_ticks_msec() / 1000.0
+
+	event_pos3D = node_quad.global_transform.affine_inverse() * event_pos3D
+
+	var event_pos2D: Vector2 = Vector2()
+
+	event_pos2D = Vector2(event_pos3D.x, -event_pos3D.y)
+
+	event_pos2D.x = event_pos2D.x / quad_mesh_size.x
+	event_pos2D.y = event_pos2D.y / quad_mesh_size.y
+
+	event_pos2D.x += 0.5
+	event_pos2D.y += 0.5
+
+	event_pos2D.x *= node_viewport.size.x
+	event_pos2D.y *= node_viewport.size.y
+
+	event.position = event_pos2D
+
+	if event is InputEventMouse:
+		event.global_position = event_pos2D
+
+	if event is InputEventMouseMotion or event is InputEventScreenDrag:
+		if last_event_pos2D == null:
+			event.relative = Vector2.ZERO
+		else:
+			event.relative = event_pos2D - last_event_pos2D
+			event.velocity = event.relative / (now - last_event_time)
+
+	last_event_pos2D = event_pos2D
+	last_event_time = now
+
+	node_viewport.push_input(event)
+
+
+func rotate_area_to_billboard():
+	var billboard_mode = node_quad.get_surface_override_material(0).params_billboard_mode
+
+	if billboard_mode > 0:
+		var camera = get_viewport().get_camera_3d()
+
+		var look = camera.to_global(Vector3(0, 0, -100)) - camera.global_transform.origin
+		look = node_area.position + look
+
+		if billboard_mode == 2:
+			look = Vector3(look.x, 0, look.z)
+
+		node_area.look_at(look, Vector3.UP)
+		node_area.rotate_object_local(Vector3.BACK, camera.rotation.z)
+
+
+func _on_button_quit_pressed() -> void:
+	get_tree().quit()
+"
+
+[sub_resource type="Resource" id="Resource_w1sat"]
+script = ExtResource("17_w1sat")
+transition = 1
+
+[sub_resource type="Resource" id="Resource_h7n70"]
+script = ExtResource("19_4qo4c")
+amplitude = 1.59
+frequency = 0.105
+metadata/_custom_type_script = "uid://cuffvge5ad4aa"
+
 [sub_resource type="ViewportTexture" id="ViewportTexture_gb4ue"]
-viewport_path = NodePath("SubViewport_menu")
+viewport_path = NodePath("GUIPanel3D/MM/SubViewport_menu")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h7n70"]
 resource_local_to_scene = true
@@ -332,6 +471,185 @@ albedo_texture = SubResource("ViewportTexture_gb4ue")
 [sub_resource type="QuadMesh" id="QuadMesh_r6xsk"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_h7n70")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u2isg"]
+size = Vector3(0.24761963, 0.38964844, 0.07678223)
+
+[sub_resource type="GDScript" id="GDScript_4qo4c"]
+script/source = "extends Node3D
+
+@onready var pc_mm: PhantomCamera3D = $\"../MM/PC_MM\"
+@onready var pc_credits: PhantomCamera3D = $PC_CREDITS
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	if pc_credits._is_active:
+		if Input.is_action_just_pressed(\"ui_accept\") or Input.is_action_just_pressed(\"interact\") or Input.is_action_just_pressed(\"left\"):
+			pc_mm.priority = GlobalScript.counter_camera + 1
+
+
+
+
+func _on_button_credits_pressed() -> void:
+	pc_credits.priority = GlobalScript.counter_camera + 1
+"
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4qo4c"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_4qo4c"]
+viewport_path = NodePath("GUIPanel3D/Credits/PC_CREDITS/SubViewport_credits")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s766l"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_4qo4c")
+
+[sub_resource type="GDScript" id="GDScript_h7n70"]
+script/source = "extends Node3D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+@onready var phantom_camera_3d: PhantomCamera3D = $PhantomCamera3D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+func _on_button_start_pressed() -> void:
+	phantom_camera_3d.priority = GlobalScript.counter_camera + 1
+	await get_tree().create_timer(.5).timeout
+	animation_player.play(\"closeyes\")
+	await get_tree().create_timer(1).timeout
+	get_tree().change_scene_to_file(\"res://Game.tscn\")
+"
+
+[sub_resource type="Resource" id="Resource_4qo4c"]
+script = ExtResource("17_w1sat")
+
+[sub_resource type="Animation" id="Animation_h7n70"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:surface_material_override/0:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_4qo4c"]
+resource_name = "closeyes"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:surface_material_override/0:albedo_color")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h7n70"]
+_data = {
+&"RESET": SubResource("Animation_h7n70"),
+&"closeyes": SubResource("Animation_4qo4c")
+}
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_s766l"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n8w8j"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)
+
+[sub_resource type="Shader" id="Shader_onrkg"]
+code = "shader_type canvas_item;
+
+render_mode unshaded;
+
+#define MAXCOLORS 16
+
+uniform bool enabled = true;
+uniform bool dithering = true;
+uniform int colors : hint_range(1, MAXCOLORS) = 12;
+uniform int dither_size: hint_range(1, 8) = 1;
+uniform sampler2D screen_texture : hint_screen_texture, filter_nearest;
+float dithering_pattern(ivec2 fragcoord) {
+	const float pattern[] = {
+		0.00, 0.50, 0.10, 0.65, 
+		0.75, 0.25, 0.90, 0.35, 
+		0.20, 0.70, 0.05, 0.50, 
+		0.95, 0.40, 0.80, 0.30
+	};
+	
+	int x = fragcoord.x % 4;
+	int y = fragcoord.y % 4;
+	
+	return pattern[y * 4 + x];
+}
+
+float reduce_color(float raw, float dither, int depth) {
+	float div = 1.0 / float(depth);
+	float val = 0.0;
+	int i = 0;
+
+	while (i <= MAXCOLORS)
+	{
+		if (raw > div * (float(i + 1))) {
+			i = i + 1;
+			continue;
+		}
+
+		if (raw * float(depth) - float(i) <= dither * 0.999)
+		{
+			val = div * float(i);
+		} 
+		else
+		{
+			val = div * float(i + 1);
+		}
+		return val;
+
+		i = i+1;
+	}
+
+	return val;
+}
+
+void fragment() {
+	
+	vec4 raw = texture(screen_texture, SCREEN_UV);
+	ivec2 uv = ivec2(FRAGCOORD.xy / float(dither_size));
+
+	if (enabled == true){
+		float dithering_value = 1.0;
+		if (dithering)
+		{
+			dithering_value = dithering_pattern(uv);
+		}
+		
+		COLOR.r = reduce_color(raw.r, (dithering_value - 0.5) * dithering_value + 0.5, colors - 1);
+		COLOR.g = reduce_color(raw.g, (dithering_value - 0.5) * dithering_value + 0.5, colors - 1);
+		COLOR.b = reduce_color(raw.b, (dithering_value - 0.5) * dithering_value + 0.5, colors - 1);
+
+	} else {
+		COLOR.rgb = raw.rgb;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4qo4c"]
+shader = SubResource("Shader_onrkg")
+shader_parameter/enabled = true
+shader_parameter/dithering = true
+shader_parameter/colors = 8
+shader_parameter/dither_size = 2
 
 [node name="Game" type="Node3D" unique_id=1933016586]
 
@@ -407,18 +725,52 @@ omni_attenuation = -0.662
 [node name="AnimationPlayer" type="AnimationPlayer" parent="cinzeira" unique_id=458149057]
 libraries/ = SubResource("AnimationLibrary_7rpsq")
 
-[node name="screen_menu" type="MeshInstance3D" parent="." unique_id=583019909]
+[node name="GUIPanel3D" type="Node3D" parent="." unique_id=907399580]
 transform = Transform3D(-0.9397223, 0, 0.3419382, 0, 1, 0, -0.3419382, 0, -0.9397223, -2.5196621, 0.6617831, -0.11765313)
+script = SubResource("GDScript_u2isg")
+
+[node name="CameraWork" type="Node3D" parent="GUIPanel3D" unique_id=1124099606]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="GUIPanel3D/CameraWork" unique_id=1522432093]
+transform = Transform3D(-0.96633935, -0.00048531944, -0.25727075, -0.0009671362, 0.99999803, 0.0017462666, 0.25726938, 0.0019363018, -0.9663379, -2.382442, 0.5819919, -0.6127088)
+top_level = true
+
+[node name="PhantomCameraHost" type="Node" parent="GUIPanel3D/CameraWork/Camera3D" unique_id=1658254185]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("14_xx5jq")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
+
+[node name="MM" type="Node3D" parent="GUIPanel3D" unique_id=1260349771]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
+
+[node name="PC_MM" type="Node3D" parent="GUIPanel3D/MM" unique_id=355214391]
+transform = Transform3D(0.8192018, 0, 0.5735055, 0, 1, 0, -0.5735055, 0, 0.8192018, 0.040329695, -0.07979119, 0.5121357)
+script = ExtResource("16_dck04")
+priority = 1
+tween_resource = SubResource("Resource_w1sat")
+noise = SubResource("Resource_h7n70")
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
+
+[node name="screen_menu" type="MeshInstance3D" parent="GUIPanel3D/MM" unique_id=583019909]
+unique_name_in_owner = true
 mesh = SubResource("QuadMesh_r6xsk")
 
-[node name="SubViewport_menu" type="SubViewport" parent="." unique_id=123125942]
+[node name="Area3D" type="Area3D" parent="GUIPanel3D/MM/screen_menu" unique_id=519241936]
+unique_name_in_owner = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GUIPanel3D/MM/screen_menu/Area3D" unique_id=2055410200]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.1552734e-05, 0.0063476563, -0.014710009)
+shape = SubResource("BoxShape3D_u2isg")
+
+[node name="SubViewport_menu" type="SubViewport" parent="GUIPanel3D/MM" unique_id=123125942]
+unique_name_in_owner = true
 transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 4
 
-[node name="CanvasLayer" type="CanvasLayer" parent="SubViewport_menu" unique_id=788004579]
-
-[node name="Control" type="Control" parent="SubViewport_menu/CanvasLayer" unique_id=832365905]
+[node name="Control" type="Control" parent="GUIPanel3D/MM/SubViewport_menu" unique_id=832365905]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -432,64 +784,164 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MainContainer" type="CenterContainer" parent="SubViewport_menu/CanvasLayer/Control" unique_id=1350876208]
+[node name="MainContainer" type="CenterContainer" parent="GUIPanel3D/MM/SubViewport_menu/Control" unique_id=1350876208]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -23.0
-offset_top = -20.0
-offset_right = 23.0
-offset_bottom = 20.0
+offset_left = -65.5
+offset_top = -101.0
+offset_right = 65.5
+offset_bottom = 101.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SubViewport_menu/CanvasLayer/Control/MainContainer" unique_id=463599756]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUIPanel3D/MM/SubViewport_menu/Control/MainContainer" unique_id=463599756]
 layout_mode = 2
 
-[node name="Button_start" type="Button" parent="SubViewport_menu/CanvasLayer/Control/MainContainer/VBoxContainer" unique_id=1984965129]
+[node name="Button_start" type="Button" parent="GUIPanel3D/MM/SubViewport_menu/Control/MainContainer/VBoxContainer" unique_id=1984965129]
 layout_mode = 2
+focus_neighbor_bottom = NodePath("../Button_credits")
+focus_next = NodePath("../Button_credits")
 theme = ExtResource("14_gb4ue")
 text = "Start"
 script = ExtResource("15_u2isg")
 
-[node name="Button_credits" type="Button" parent="SubViewport_menu/CanvasLayer/Control/MainContainer/VBoxContainer" unique_id=704856457]
+[node name="Button_credits" type="Button" parent="GUIPanel3D/MM/SubViewport_menu/Control/MainContainer/VBoxContainer" unique_id=704856457]
 layout_mode = 2
+focus_neighbor_top = NodePath("../Button_start")
+focus_neighbor_bottom = NodePath("../Button_settings")
+focus_next = NodePath("../Button_settings")
+focus_previous = NodePath("../Button_start")
 theme = ExtResource("14_gb4ue")
 theme_override_font_sizes/font_size = 31
 text = "Credits"
 script = ExtResource("15_u2isg")
 
-[node name="Button_settings" type="Button" parent="SubViewport_menu/CanvasLayer/Control/MainContainer/VBoxContainer" unique_id=1835909188]
+[node name="Button_settings" type="Button" parent="GUIPanel3D/MM/SubViewport_menu/Control/MainContainer/VBoxContainer" unique_id=1835909188]
 layout_mode = 2
+focus_neighbor_top = NodePath("../Button_credits")
+focus_neighbor_bottom = NodePath("../Button_quit")
+focus_next = NodePath("../Button_credits")
+focus_previous = NodePath("../Button_quit")
 theme = ExtResource("14_gb4ue")
 theme_override_font_sizes/font_size = 24
 text = "Settings"
 script = ExtResource("15_u2isg")
 
-[node name="Button_quit" type="Button" parent="SubViewport_menu/CanvasLayer/Control/MainContainer/VBoxContainer" unique_id=536560237]
+[node name="Button_quit" type="Button" parent="GUIPanel3D/MM/SubViewport_menu/Control/MainContainer/VBoxContainer" unique_id=536560237]
 layout_mode = 2
+focus_neighbor_top = NodePath("../Button_settings")
+focus_previous = NodePath("../Button_settings")
 theme = ExtResource("14_gb4ue")
 theme_override_font_sizes/font_size = 21
 text = "Quit"
 script = ExtResource("15_u2isg")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=152940283]
+[node name="Credits" type="Node3D" parent="GUIPanel3D" unique_id=1167104384]
+transform = Transform3D(1.0000004, 0, 0, 0, 1, 0, 0, 0, 1.0000004, 0, 0, 0)
+script = SubResource("GDScript_4qo4c")
+
+[node name="PC_CREDITS" type="Node3D" parent="GUIPanel3D/Credits" unique_id=239663385]
+transform = Transform3D(0.5202193, 0.83526134, 0.1780737, 0, 0.2085092, -0.9780206, -0.85403264, 0.5087851, 0.108470544, -0.52485216, -0.07979119, 0.8711975)
+script = ExtResource("16_dck04")
+tween_resource = SubResource("Resource_w1sat")
+noise = SubResource("Resource_h7n70")
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
+
+[node name="SubViewport_credits" type="SubViewport" parent="GUIPanel3D/Credits/PC_CREDITS" unique_id=1104213464]
+transparent_bg = true
+
+[node name="Control" type="Control" parent="GUIPanel3D/Credits/PC_CREDITS/SubViewport_credits" unique_id=1144879515]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 23.12
+offset_bottom = 23.119751
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="GUIPanel3D/Credits/PC_CREDITS/SubViewport_credits/Control" unique_id=563174995]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUIPanel3D/Credits/PC_CREDITS/SubViewport_credits/Control/CenterContainer" unique_id=1561493383]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GUIPanel3D/Credits/PC_CREDITS/SubViewport_credits/Control/CenterContainer/VBoxContainer" unique_id=1136834295]
+layout_mode = 2
+theme = ExtResource("14_gb4ue")
+text = "CREDITS 
+@piesekii - 3d modelling, progamming, story
+@cher_v1 - 3d modelling
+@redovoidxx - progamming, story
+@chelly - music
+tronisis - music
+"
+vertical_alignment = 1
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="GUIPanel3D/Credits/PC_CREDITS" unique_id=1255043963]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GUIPanel3D/Credits/PC_CREDITS" unique_id=1758327809]
+transform = Transform3D(1, -7.4505815e-09, 5.9604645e-08, 5.9604645e-08, -2.8810227e-08, -1, 7.45058e-09, 1, -5.861255e-08, -0.0057846606, 0.024738524, -0.7327777)
+mesh = SubResource("PlaneMesh_4qo4c")
+surface_material_override/0 = SubResource("StandardMaterial3D_s766l")
+
+[node name="Start" type="Node3D" parent="GUIPanel3D" unique_id=2101444870]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
+script = SubResource("GDScript_h7n70")
+
+[node name="PhantomCamera3D" type="Node3D" parent="GUIPanel3D/Start" unique_id=1978008958]
+transform = Transform3D(1, 0, 0, 0, 0.9015986, -0.4325736, 0, 0.4325736, 0.9015986, 0.037624054, -0.022806222, 0.40972558)
+script = ExtResource("16_dck04")
+tween_resource = SubResource("Resource_4qo4c")
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GUIPanel3D/Start" unique_id=746671851]
+libraries/ = SubResource("AnimationLibrary_h7n70")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GUIPanel3D/Start" unique_id=288962400]
+transform = Transform3D(1, 0, 0, 0, -0.4506594, -0.892696, 0, 0.892696, -0.4506594, -1.15484e-07, -0.042718105, 0.14309931)
+mesh = SubResource("PlaneMesh_s766l")
+surface_material_override/0 = SubResource("StandardMaterial3D_n8w8j")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="GUIPanel3D" unique_id=152940283]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_target = true
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1522432093]
-transform = Transform3D(-0.9659258, 0, -0.25881913, 0, 1, 0, 0.25881913, 0, -0.9659258, -2.3824418, 0.5819919, -0.6127085)
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1565618705]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1158417235]
+material = SubResource("ShaderMaterial_4qo4c")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[connection signal="pressed" from="GUIPanel3D/MM/SubViewport_menu/Control/MainContainer/VBoxContainer/Button_start" to="GUIPanel3D/Start" method="_on_button_start_pressed"]
+[connection signal="pressed" from="GUIPanel3D/MM/SubViewport_menu/Control/MainContainer/VBoxContainer/Button_credits" to="GUIPanel3D/Credits" method="_on_button_credits_pressed"]
+[connection signal="pressed" from="GUIPanel3D/MM/SubViewport_menu/Control/MainContainer/VBoxContainer/Button_quit" to="GUIPanel3D" method="_on_button_quit_pressed"]
+[connection signal="became_active" from="GUIPanel3D/Credits/PC_CREDITS" to="GUIPanel3D/Credits" method="_on_pc_mm_2_became_active"]
 
 [editable path="rooflamp"]

@@ -18,12 +18,12 @@
 [ext_resource type="PackedScene" uid="uid://c2dshnv4nw6yd" path="res://Interactable/Levers/lever_red.tscn" id="15_qjyg3"]
 [ext_resource type="PackedScene" uid="uid://dxsg438aj6wck" path="res://Interactable/Levers/lever_green.tscn" id="16_elkpi"]
 [ext_resource type="PackedScene" uid="uid://fh6dd511awvd" path="res://Room/bed.tscn" id="18_wuoie"]
-[ext_resource type="PackedScene" uid="uid://duichj1fidq7x" path="res://Interactable/Cards/TheWayToStartYourDay.tscn" id="19_bvhbk"]
 [ext_resource type="Script" uid="uid://mmuqsvb34jou" path="res://2D Minigame/new_lever/old_button.gd" id="19_w2501"]
 [ext_resource type="PackedScene" uid="uid://bbm23gp0w0al0" path="res://Room/lamp.tscn" id="20_cpsxm"]
 [ext_resource type="PackedScene" uid="uid://b2v70lsd76el5" path="res://Room/rooflamp.tscn" id="21_hmewc"]
 [ext_resource type="Script" uid="uid://da5yfsbf600yh" path="res://2D Minigame/validatorOk/okaynator.gd" id="22_0mevm"]
 [ext_resource type="PackedScene" uid="uid://bomoaa5enox6i" path="res://2D Minigame/validatorOk/okaynator.tscn" id="22_7ged1"]
+[ext_resource type="PackedScene" uid="uid://esg0lk7igkcp" path="res://Interactable/Cards/FirstNote.tscn" id="22_jsoai"]
 [ext_resource type="PackedScene" uid="uid://boh26wp1cx3dc" path="res://Room/fan.tscn" id="25_jsoai"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xkndl"]
@@ -118,6 +118,20 @@ tracks/2/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../SubViewport/Label:text")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["GOOD JOB
+DAILY QUOTA REACHED
+ENJOY YOU REST"]
+}
 
 [sub_resource type="Animation" id="Animation_w7ht3"]
 resource_name = "dailyReset"
@@ -159,6 +173,51 @@ tracks/2/keys = {
 "values": [false, true]
 }
 
+[sub_resource type="Animation" id="Animation_hwsgv"]
+resource_name = "notokquotaEnded"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../SubViewport/Label:theme_override_colors/font_color")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.03333336, 1, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1.2832699, 0, 0.16034025, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../SubViewport/Label:theme_override_colors/font_outline_color")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.03333336, 1, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../SubViewport/Label:text")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.9666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": ["GOOD JOB
+DAILY QUOTA REACHED
+ENJOY YOU REST", "FAILURE IN COMPLAING
+COMPANY RULE
+WAIT FOR TERMINATION
+IN YOUR ROOM"]
+}
+
 [sub_resource type="Animation" id="Animation_bisgb"]
 resource_name = "okquotaEnded"
 length = 5.0
@@ -186,11 +245,26 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../SubViewport/Label:text")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["GOOD JOB
+DAILY QUOTA REACHED
+ENJOY YOU REST"]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y5ctq"]
 _data = {
 &"RESET": SubResource("Animation_y5ctq"),
 &"dailyReset": SubResource("Animation_w7ht3"),
+&"notokquotaEnded": SubResource("Animation_hwsgv"),
 &"okquotaEnded": SubResource("Animation_bisgb")
 }
 
@@ -247,6 +321,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [true, true, false, true, false]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../lamp2/OmniLight3D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_jsoai"]
 resource_name = "red"
@@ -263,12 +349,54 @@ tracks/0/keys = {
 "update": 1,
 "values": [true, true, false, true, false]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OmniLight3D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_8ktx7"]
+resource_name = "red_failing"
+length = 0.7
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../lamp2/OmniLight3D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4666667, 0.53333336, 0.6, 0.6666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, true, false, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OmniLight3D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jsoai"]
 _data = {
 &"RESET": SubResource("Animation_0mevm"),
 &"green": SubResource("Animation_w2501"),
-&"red": SubResource("Animation_jsoai")
+&"red": SubResource("Animation_jsoai"),
+&"red_failing": SubResource("Animation_8ktx7")
 }
 
 [sub_resource type="GDScript" id="GDScript_hmewc"]
@@ -336,10 +464,99 @@ tracks/1/keys = {
 "values": [1.545, 1.2650000000000006]
 }
 
+[sub_resource type="Animation" id="Animation_gebyw"]
+resource_name = "rooflamp_off"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OmniLight3D:light_energy")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.527, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OmniLight3D:omni_attenuation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.545]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0mevm"]
 _data = {
 &"RESET": SubResource("Animation_hmewc"),
-&"rooflamp": SubResource("Animation_7ged1")
+&"rooflamp": SubResource("Animation_7ged1"),
+&"rooflamp_off": SubResource("Animation_gebyw")
+}
+
+[sub_resource type="Animation" id="Animation_4my3f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EndScreen/ColorRect:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EndScreen/ColorRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_aeq37"]
+resource_name = "end_screen"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EndScreen/ColorRect:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EndScreen/ColorRect:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.033333335, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_suycs"]
+_data = {
+&"RESET": SubResource("Animation_4my3f"),
+&"end_screen": SubResource("Animation_aeq37")
 }
 
 [node name="Game" type="Node3D" unique_id=1933016586]
@@ -531,6 +748,7 @@ position = Vector2(0, 480)
 position = Vector2(1300, 550)
 
 [node name="GlitchOverlay" type="Sprite2D" parent="Computer/SubViewport" unique_id=892742363]
+visible = false
 modulate = Color(1, 0, 0, 1)
 z_index = 100
 position = Vector2(576, 324)
@@ -551,7 +769,7 @@ libraries/ = SubResource("AnimationLibrary_jsoai")
 script = SubResource("GDScript_hmewc")
 
 [node name="lamp1" parent="lampAP" unique_id=2107541932 instance=ExtResource("20_cpsxm")]
-transform = Transform3D(0.05, 0, 0, 0, 0.024, 0, 0, 0, 0.05, 0.13898371, 1.3411682, 1.4863657)
+transform = Transform3D(0.05, 0, 0, 0, 0.02389882, -0.004586378, 0, 0.0022014615, 0.04978921, 0.13898371, 1.2792517, 1.4863657)
 layers = 524288
 
 [node name="OmniLight3D" type="OmniLight3D" parent="lampAP/lamp1" unique_id=1801347732]
@@ -564,7 +782,7 @@ shadow_caster_mask = 4294443007
 omni_range = 9.225
 
 [node name="lamp2" parent="lampAP" unique_id=405766484 instance=ExtResource("20_cpsxm")]
-transform = Transform3D(0.05, 0, 0, 0, 0.024, 0, 0, 0, 0.05, -0.4610163, 1.3411682, 1.4863657)
+transform = Transform3D(0.05, 0, 0, 0, 0.023987612, -0.0016062992, 0, 0.0007710236, 0.049974192, -0.4610163, 1.280473, 1.4863657)
 layers = 524288
 
 [node name="OmniLight3D" type="OmniLight3D" parent="lampAP/lamp2" unique_id=2045568524]
@@ -583,10 +801,18 @@ transform = Transform3D(-1.1580226e-08, 0, 0.26492468, 0, 0.26492468, 0, -0.2649
 
 [node name="button_blue" parent="Interactable" unique_id=1554912145 instance=ExtResource("4_t88pq")]
 transform = Transform3D(1, 0, 0, 0, 0.5607835, 0.82796246, 0, -0.82796246, 0.5607835, 0.2846245, 0.6618584, 1.3107686)
+script = ExtResource("19_w2501")
+deactivate_after_quota = false
+is_lever = false
+lever_starts_up = false
 metadata/_edit_group_ = true
 
 [node name="button_red" parent="Interactable" unique_id=2098842949 instance=ExtResource("5_r0x5m")]
 transform = Transform3D(1, 0, 0, 0, 0.5607835, 0.82796246, 0, -0.82796246, 0.5607835, -0.1910766, 0.6620058, 1.311179)
+script = ExtResource("19_w2501")
+deactivate_after_quota = false
+is_lever = false
+lever_starts_up = false
 metadata/_edit_group_ = true
 
 [node name="lever_yellow" parent="Interactable" unique_id=511064839 instance=ExtResource("16_elkpi")]
@@ -608,8 +834,8 @@ lever_starts_up = false
 [node name="Bed" parent="Interactable" unique_id=590706542 instance=ExtResource("18_wuoie")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2.458678, 0.32559925, 0.021604389)
 
-[node name="FirstNote" parent="Interactable" unique_id=1167910242 instance=ExtResource("19_bvhbk")]
-transform = Transform3D(-4.371138e-08, 4.3711392e-08, -1, 0.9988265, 0.04843134, -4.154309e-08, 0.04843134, -0.9988265, -4.5777096e-08, 0.00010050833, 0.9698012, 1.3437761)
+[node name="TheWayToStartYourDay" parent="Interactable" unique_id=2129975647 instance=ExtResource("22_jsoai")]
+transform = Transform3D(-4.371139e-08, 0, -1, 1, -4.371139e-08, -4.371139e-08, -4.371139e-08, -1, 1.9106855e-15, -0.016720146, 0.9673189, 1.3213811)
 
 [node name="rooflamp" parent="." unique_id=1622055945 instance=ExtResource("21_hmewc")]
 transform = Transform3D(0.06628125, 0, 0, 0, 0.17159903, 0, 0, 0, 0.06628125, -0.6328753, 2.0795875, -0.030397892)
@@ -628,11 +854,23 @@ omni_range = 6.285
 libraries/ = SubResource("AnimationLibrary_0mevm")
 autoplay = &"rooflamp"
 
-[node name="Player" parent="." unique_id=285201373 instance=ExtResource("2_u44n3")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.3, 1.2, 0)
-
 [node name="Fan" parent="." unique_id=1175585134 instance=ExtResource("25_jsoai")]
 transform = Transform3D(0.365, 0, 0, 0, 0.365, 0, 0, 0, 0.365, 0.7044003, 1.6953883, 0.16188365)
+
+[node name="Player" parent="." unique_id=285201373 instance=ExtResource("2_u44n3")]
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 0.038510323, 1.0913359, 0.06583506)
+
+[node name="EndScreen" type="AnimationPlayer" parent="." unique_id=1487596793]
+libraries/ = SubResource("AnimationLibrary_suycs")
+
+[node name="ColorRect" type="ColorRect" parent="EndScreen" unique_id=958690824]
+visible = false
+modulate = Color(0, 0, 0, 0)
+z_index = 2
+offset_left = -11.0
+offset_top = -11.0
+offset_right = 1167.0
+offset_bottom = 664.0
 
 [connection signal="interacted" from="Interactable/lever_green" to="Computer" method="_on_lever_green_interacted"]
 [connection signal="interacted" from="Interactable/lever_green" to="Interactable/lever_red" method="activate"]

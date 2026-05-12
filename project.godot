@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ScreamologyKnowledge"
-run/main_scene="uid://dagwacdj6u7i1"
+run/main_scene="uid://cloe6dnlinajc"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -19,6 +19,11 @@ config/icon="res://icon.svg"
 
 GlobalScript="*uid://bmusts0bpmfa7"
 GameOverScreen="*uid://c6ll3d11pkl8l"
+PhantomCameraManager="*uid://duq6jhf6unyis"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg")
 
 [global_group]
 
