@@ -470,7 +470,6 @@ collision_mask = 3
 collide_with_areas = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1694445316]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=640647444]
 material = SubResource("ShaderMaterial_onrkg")

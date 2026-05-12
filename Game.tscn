@@ -8,13 +8,11 @@
 [ext_resource type="Script" uid="uid://b2k8d6ct5ae5g" path="res://2D Minigame/validator/validator.gd" id="4_elkpi"]
 [ext_resource type="PackedScene" uid="uid://by8kuy8a31jx5" path="res://Interactable/Buttons/button_blue.tscn" id="4_t88pq"]
 [ext_resource type="PackedScene" uid="uid://8k5ah3um02p4" path="res://Interactable/Buttons/button_red.tscn" id="5_r0x5m"]
-[ext_resource type="Script" uid="uid://cq3bytg7ayec0" path="res://2D Minigame/timer_spawner_gear.gd" id="5_wuoie"]
-[ext_resource type="Script" uid="uid://cn6ocu5fymnla" path="res://2D Minigame/prensa.gd" id="8_0yprl"]
-[ext_resource type="Texture2D" uid="uid://dwh1owumwukip" path="res://2D Minigame/prensa.png" id="9_wuoie"]
-[ext_resource type="Script" uid="uid://ctvje1frukchq" path="res://2D Minigame/esteira/esteira.gd" id="10_bvhbk"]
+[ext_resource type="Script" path="res://esteiranew.gd" id="9_hmewc"]
+[ext_resource type="PackedScene" uid="uid://cf2yced265gsh" path="res://Item.tscn" id="10_7ged1"]
 [ext_resource type="Shader" uid="uid://cl1ahtmkfkfp4" path="res://2D Minigame/esteira/MoverEsteira.gdshader" id="11_cpsxm"]
 [ext_resource type="Texture2D" uid="uid://cq2vxyrcqkfin" path="res://2D Minigame/esteira/EsteiraClip.png" id="12_hmewc"]
-[ext_resource type="Script" uid="uid://cuspijw1bj6yf" path="res://2D Minigame/esteira/fim_da_esteira.gd" id="13_7ged1"]
+[ext_resource type="Texture2D" uid="uid://cyac1jvakif3y" path="res://2D Minigame/gear/tex_red.png" id="13_7ged1"]
 [ext_resource type="FontFile" uid="uid://dvsjj425pqcue" path="res://Room/OldNewspaperTypes.ttf" id="15_0mevm"]
 [ext_resource type="PackedScene" uid="uid://b3b37n5icmuyl" path="res://2D Minigame/validator/validator.tscn" id="15_elkpi"]
 [ext_resource type="PackedScene" uid="uid://c2dshnv4nw6yd" path="res://Interactable/Levers/lever_red.tscn" id="15_qjyg3"]
@@ -24,6 +22,9 @@
 [ext_resource type="PackedScene" uid="uid://bbm23gp0w0al0" path="res://Room/lamp.tscn" id="20_cpsxm"]
 [ext_resource type="PackedScene" uid="uid://b2v70lsd76el5" path="res://Room/rooflamp.tscn" id="21_hmewc"]
 [ext_resource type="Script" uid="uid://da5yfsbf600yh" path="res://2D Minigame/validatorOk/okaynator.gd" id="22_0mevm"]
+[ext_resource type="PackedScene" uid="uid://bomoaa5enox6i" path="res://2D Minigame/validatorOk/okaynator.tscn" id="22_7ged1"]
+[ext_resource type="PackedScene" uid="uid://esg0lk7igkcp" path="res://Interactable/Cards/FirstNote.tscn" id="22_jsoai"]
+[ext_resource type="PackedScene" uid="uid://boh26wp1cx3dc" path="res://Room/fan.tscn" id="25_jsoai"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xkndl"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -42,12 +43,37 @@ fog_enabled = true
 fog_light_color = Color(0.6993718, 0.66082895, 0.43350953, 1)
 fog_light_energy = 0.25
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_w2501"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_hmewc"]
+viewport_path = NodePath("Okaynator/OkaynatorScreen/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ged1"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_hmewc")
+
+[sub_resource type="QuadMesh" id="QuadMesh_0mevm"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_7ged1")
+size = Vector2(3.23, 1.34)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_lvtmh"]
+viewport_path = NodePath("Validator/ValidatorScreen/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r0x5m"]
+resource_local_to_scene = true
+albedo_color = Color(0.8217887, 0.82178867, 0.82178867, 1)
+albedo_texture = SubResource("ViewportTexture_lvtmh")
+
+[sub_resource type="QuadMesh" id="QuadMesh_t88pq"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_r0x5m")
+size = Vector2(2.555, 0.83)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_gwjdr"]
 viewport_path = NodePath("Computer/SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lvtmh"]
 resource_local_to_scene = true
-albedo_texture = SubResource("ViewportTexture_w2501")
+albedo_texture = SubResource("ViewportTexture_gwjdr")
 
 [sub_resource type="QuadMesh" id="QuadMesh_yyih5"]
 resource_local_to_scene = true
@@ -242,94 +268,6 @@ _data = {
 &"okquotaEnded": SubResource("Animation_bisgb")
 }
 
-[sub_resource type="Animation" id="Animation_joorw"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../CollisionShape2D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-1.0964355, 344.4109)]
-}
-
-[sub_resource type="Animation" id="Animation_3mrqo"]
-resource_name = "prensa"
-length = 0.5667
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.16666667, 0.40000004, 0.5666667),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 366.83838), Vector2(0, 366.83838), Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.16666667, 0.40000004, 0.5666667),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1, 2.010574), Vector2(1, 2.010574), Vector2(1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../CollisionShape2D:position")
-tracks/2/interp = 2
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.16666667, 0.40000004, 0.5666667),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(-1.0964355, 344.4109), Vector2(-1.0964355, 1078.55), Vector2(-1.0964355, 1078.55), Vector2(-1.0964355, 344.4109)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_joorw"]
-_data = {
-&"RESET": SubResource("Animation_joorw"),
-&"prensa": SubResource("Animation_3mrqo")
-}
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lvtmh"]
-size = Vector2(157.8948, 42.29608)
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yx171"]
 shader = ExtResource("11_cpsxm")
 shader_parameter/scroll_speed = Vector2(0, 0)
@@ -338,36 +276,8 @@ shader_parameter/tint_color = Color(0.44827962, 0.49343228, 0.44320774, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yhmtn"]
 size = Vector2(297.342, 101.35134)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_veylk"]
-size = Vector2(275, 382)
-
 [sub_resource type="Theme" id="Theme_w2501"]
 default_font = ExtResource("15_0mevm")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_hmewc"]
-viewport_path = NodePath("Okaynator_Node/OkaynatorScreen/SubViewport")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ged1"]
-resource_local_to_scene = true
-albedo_texture = SubResource("ViewportTexture_hmewc")
-
-[sub_resource type="QuadMesh" id="QuadMesh_0mevm"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_7ged1")
-size = Vector2(3.225, 1.38)
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_lvtmh"]
-viewport_path = NodePath("Validator/ValidatorScreen/SubViewport")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r0x5m"]
-resource_local_to_scene = true
-albedo_color = Color(0.8217887, 0.82178867, 0.82178867, 1)
-albedo_texture = SubResource("ViewportTexture_lvtmh")
-
-[sub_resource type="QuadMesh" id="QuadMesh_t88pq"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_r0x5m")
-size = Vector2(2.585, 0.79)
 
 [sub_resource type="Animation" id="Animation_0mevm"]
 length = 0.001
@@ -771,11 +681,6 @@ transform = Transform3D(-0.8057973, 0, -7.0445026e-08, 0, 0.9990809, 0, 8.729238
 visible = false
 mesh = SubResource("QuadMesh_yyih5")
 
-[node name="Timer" type="Timer" parent="Computer" unique_id=1361310628 node_paths=PackedStringArray("sub_viewport")]
-wait_time = 5.0
-script = ExtResource("5_wuoie")
-sub_viewport = NodePath("../SubViewport")
-
 [node name="EndedQuota" type="AnimationPlayer" parent="Computer" unique_id=263249570]
 root_node = NodePath("../SubViewportContainer")
 libraries/ = SubResource("AnimationLibrary_y5ctq")
@@ -785,30 +690,17 @@ handle_input_locally = false
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
-[node name="prensa" type="Area2D" parent="Computer/SubViewport" unique_id=904915412]
-position = Vector2(614, 172.99998)
-scale = Vector2(0.456, 0.331)
-script = ExtResource("8_0yprl")
-
-[node name="prensa" type="Sprite2D" parent="Computer/SubViewport/prensa" unique_id=315162200]
-texture = ExtResource("9_wuoie")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Computer/SubViewport/prensa/prensa" unique_id=682149882]
-libraries/ = SubResource("AnimationLibrary_joorw")
-
-[node name="Sprite2D3" type="Sprite2D" parent="Computer/SubViewport/prensa/prensa" unique_id=397386475]
-position = Vector2(0.00012207031, -710.6637)
-rotation = 3.1415925
-texture = ExtResource("9_wuoie")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Computer/SubViewport/prensa" unique_id=2126846871]
-position = Vector2(-1.0964355, 344.4109)
-shape = SubResource("RectangleShape2D_lvtmh")
-
-[node name="esteira" type="Area2D" parent="Computer/SubViewport" unique_id=818956301]
+[node name="esteira" type="Area2D" parent="Computer/SubViewport" unique_id=818956301 node_paths=PackedStringArray("spawn_point", "end_point", "esteira_sprite", "button_blue", "button_red", "lever_base")]
 position = Vector2(581.00006, 480)
 scale = Vector2(5.7374997, 2.22)
-script = ExtResource("10_bvhbk")
+script = ExtResource("9_hmewc")
+item_scene = ExtResource("10_7ged1")
+spawn_point = NodePath("../SpawnPoint")
+end_point = NodePath("../SpawnPoint2")
+esteira_sprite = NodePath("esteira")
+button_blue = NodePath("../../../Interactable/button_blue")
+button_red = NodePath("../../../Interactable/button_red")
+lever_base = NodePath("../../../Interactable/lever_red")
 
 [node name="esteira" type="Sprite2D" parent="Computer/SubViewport/esteira" unique_id=1327133478]
 z_index = -1
@@ -870,94 +762,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Okaynator_Node" type="Node3D" parent="." unique_id=686000538]
-script = ExtResource("22_0mevm")
-
-[node name="OkaynatorScreen" type="MeshInstance3D" parent="Okaynator_Node" unique_id=685027253]
-transform = Transform3D(-4.049444e-09, -0.17762356, -0.011570442, -0.14399998, 7.780626e-09, -4.24385e-08, 3.4668822e-08, 0.011570442, -0.17762356, -0.4132506, 1.0014137, 1.356437)
-mesh = SubResource("QuadMesh_0mevm")
-
-[node name="SubViewport" type="SubViewport" parent="Okaynator_Node/OkaynatorScreen" unique_id=1948521908]
-transparent_bg = true
-handle_input_locally = false
-render_target_update_mode = 4
-
-[node name="Label" type="Label" parent="Okaynator_Node/OkaynatorScreen/SubViewport" unique_id=862209717]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -248.0
-offset_top = -227.0
-offset_right = 255.0
-offset_bottom = 61.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1, 1.535)
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
-theme_override_colors/font_outline_color = Color(0.72433007, 0, 0.26967552, 1)
-theme_override_constants/outline_size = 13
-theme_override_font_sizes/font_size = 211
-
-[node name="ProgressBar" type="ProgressBar" parent="Okaynator_Node/OkaynatorScreen/SubViewport" unique_id=2048943041]
-modulate = Color(0.34663484, 0.830996, 0, 1)
-offset_left = -67.0
-offset_top = 548.0
-offset_right = 497.0
-offset_bottom = 1164.0
-rotation = 4.712389
-step = 1.0
-fill_mode = 3
-show_percentage = false
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Okaynator_Node/OkaynatorScreen" unique_id=1947479733]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="Validator" parent="." unique_id=2132485407 instance=ExtResource("15_elkpi")]
-transform = Transform3D(0.16982353, 0, 0, 0, 0.16982353, 0, 0, 0, 0.16982353, -0.94346917, -0.34259048, 1.077118)
-script = ExtResource("4_elkpi")
-
-[node name="ValidatorScreen" type="MeshInstance3D" parent="Validator" unique_id=399696312]
-transform = Transform3D(-0.8057973, 0, -7.044502e-08, 0, 0.99908084, 0, 8.729237e-08, 0, -0.99850804, 1.2845984, 4.5550423, 0.16032219)
-mesh = SubResource("QuadMesh_t88pq")
-
-[node name="SubViewport" type="SubViewport" parent="Validator/ValidatorScreen" unique_id=491091882]
-transparent_bg = true
-
-[node name="Label" type="Label" parent="Validator/ValidatorScreen/SubViewport" unique_id=1673315365]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -248.0
-offset_top = -227.0
-offset_right = 255.0
-offset_bottom = 61.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1, 1.535)
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
-theme_override_colors/font_outline_color = Color(0.72433007, 0, 0.26967552, 1)
-theme_override_constants/outline_size = 13
-theme_override_font_sizes/font_size = 211
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Validator/ValidatorScreen" unique_id=1264812670]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="lampAP" type="AnimationPlayer" parent="." unique_id=496529248]
 root_node = NodePath("lamp1")
@@ -1044,7 +848,7 @@ light_energy = 0.937
 shadow_enabled = true
 shadow_normal_bias = 10.0
 shadow_caster_mask = 4294443007
-omni_range = 5.095
+omni_range = 6.285
 
 [node name="lightroofAP" type="AnimationPlayer" parent="rooflamp" unique_id=402787690]
 libraries/ = SubResource("AnimationLibrary_0mevm")
@@ -1068,12 +872,6 @@ offset_top = -11.0
 offset_right = 1167.0
 offset_bottom = 664.0
 
-[connection signal="timeout" from="Computer/Timer" to="Computer/Timer" method="_on_timeout"]
-[connection signal="area_entered" from="Computer/SubViewport/prensa" to="Computer/SubViewport/prensa" method="_on_area_entered"]
-[connection signal="area_entered" from="Computer/SubViewport/fim da esteira" to="Computer/SubViewport/fim da esteira" method="_on_area_entered"]
-[connection signal="interacted" from="Interactable/button_blue" to="Computer/SubViewport/prensa" method="_on_button_blue_interacted"]
-[connection signal="interacted" from="Interactable/lever_red" to="Computer/Timer" method="start_timer"]
-[connection signal="interacted" from="Interactable/lever_red" to="Computer/SubViewport/esteira" method="_on_lever_base_interacted"]
 [connection signal="interacted" from="Interactable/lever_green" to="Computer" method="_on_lever_green_interacted"]
 [connection signal="interacted" from="Interactable/lever_green" to="Interactable/lever_red" method="activate"]
 [connection signal="interacted" from="Interactable/lever_red" to="Computer" method="_on_lever_red_interacted"]

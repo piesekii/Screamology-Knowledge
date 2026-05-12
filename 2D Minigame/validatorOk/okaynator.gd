@@ -1,4 +1,4 @@
-extends Node3D
+extends MeshInstance3D
 
 @onready var progress_bar: ProgressBar = $OkaynatorScreen/SubViewport/ProgressBar
 
