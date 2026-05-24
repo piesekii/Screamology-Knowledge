@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://mncnah3dp2nr"
+path="res://.godot/imported/textura interação.ogg-63da37fa9930c7b0e2a85d501762a13e.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/textura interação.ogg"
+dest_files=["res://.godot/imported/textura interação.ogg-63da37fa9930c7b0e2a85d501762a13e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

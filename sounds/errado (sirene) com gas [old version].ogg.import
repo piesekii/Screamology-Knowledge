@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://vhe3s5ccywmo"
+path="res://.godot/imported/errado (sirene) com gas [old version].ogg-c37795b93fa4ba160875af4076fdec48.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/errado (sirene) com gas [old version].ogg"
+dest_files=["res://.godot/imported/errado (sirene) com gas [old version].ogg-c37795b93fa4ba160875af4076fdec48.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

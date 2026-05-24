@@ -46,7 +46,10 @@ func _generate_symbols() -> void:
 		# resorteia ate cair em outro
 		var pick: int
 		while true:
-			pick = randi_range(1, 4)
+			if GlobalScript.current_day == 1:
+				pick = randi_range(1, 2)
+			else:
+				pick = randi_range(1,4)
 			if pick == 4 and triangle_used:
 				continue  # tenta de novo
 			break

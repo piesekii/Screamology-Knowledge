@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dsmymwcid2ijc"
+path="res://.godot/imported/errado lá longe (sirene) e pessoas entrando no quarto pra fazer algo.ogg-58b94622aa2f800f21f38b24a8f0b91e.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/errado lá longe (sirene) e pessoas entrando no quarto pra fazer algo.ogg"
+dest_files=["res://.godot/imported/errado lá longe (sirene) e pessoas entrando no quarto pra fazer algo.ogg-58b94622aa2f800f21f38b24a8f0b91e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

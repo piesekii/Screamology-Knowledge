@@ -12,6 +12,8 @@ var picked_up : bool = false:
 			anim.play("pin_down")
 			apply_shader_to_model(mmesh)
 			set_collision_layer_value(2, false)
+			%AudioListener3D.pitch_scale = randf_range(0.9, 1.1)
+			%AudioListener3D.play()
 		else:
 			anim.play_backwards("pin_down")
 			remove_shader_to_model(mmesh)

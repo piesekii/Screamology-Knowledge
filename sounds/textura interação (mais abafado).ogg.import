@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ig41aur5qtg4"
+path="res://.godot/imported/textura interação (mais abafado).ogg-b74d0257806757a6cdd461db56a8e3bf.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/textura interação (mais abafado).ogg"
+dest_files=["res://.godot/imported/textura interação (mais abafado).ogg-b74d0257806757a6cdd461db56a8e3bf.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

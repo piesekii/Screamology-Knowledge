@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://buxee5e5j7uyu"
+path="res://.godot/imported/errado (sirene).ogg-0854cfc8092484d0877ac3618871ec40.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/errado (sirene).ogg"
+dest_files=["res://.godot/imported/errado (sirene).ogg-0854cfc8092484d0877ac3618871ec40.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

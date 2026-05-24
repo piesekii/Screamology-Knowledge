@@ -4,7 +4,6 @@ var counter_camera := 2
 # --- estado do jogo ---
 var current_day := 1
 var label_interact := ""
-var damaged_gear_chance = 0
 var validator_text : String
 var amount_error := 0
 var quota_finished := false
@@ -39,10 +38,8 @@ func _setup_day(day: int) -> void:
 	# config especifica do dia
 	match day:
 		1:
-			damaged_gear_chance = 0
-			quota_amount_needed = 10
+			quota_amount_needed = 1
 		2:
-			damaged_gear_chance = 25
 			quota_amount_needed = 15
 
 # --- pontuacao ---

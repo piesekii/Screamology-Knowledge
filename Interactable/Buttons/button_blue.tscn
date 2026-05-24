@@ -1,9 +1,10 @@
 [gd_scene format=4 uid="uid://by8kuy8a31jx5"]
 
+[ext_resource type="Script" uid="uid://mmuqsvb34jou" path="res://2D Minigame/new_lever/old_button.gd" id="1_2mjmc"]
 [ext_resource type="Texture2D" uid="uid://bw7erixyqd60b" path="res://Room/textures/STEELPLT.JPG" id="1_ydu7d"]
 [ext_resource type="Texture2D" uid="uid://01n2fcagmpax" path="res://Room/textures/SB024.JPG" id="2_k2hpm"]
-[ext_resource type="Script" uid="uid://bgmee1ygsuyew" path="res://Interactable/Buttons/button.gd" id="3_cx6o7"]
 [ext_resource type="Material" uid="uid://buo6eflpjf1dx" path="res://Materials/Black.tres" id="3_k2hpm"]
+[ext_resource type="AudioStream" uid="uid://c5bhbm2t3cnha" path="res://sounds/botao.ogg" id="5_2mjmc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b21fm"]
 resource_name = "Button Base"
@@ -107,7 +108,7 @@ _data = {
 }
 
 [node name="button_blue" type="Area3D" unique_id=363488726 node_paths=PackedStringArray("outline") groups=["interactable"]]
-script = ExtResource("3_cx6o7")
+script = ExtResource("1_2mjmc")
 outline = NodePath("button_blue/outline")
 
 [node name="button_blue" type="MeshInstance3D" parent="." unique_id=1554912145]
@@ -125,5 +126,10 @@ shape = SubResource("SphereShape3D_cx6o7")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2074554586]
 libraries/ = SubResource("AnimationLibrary_fn0wl")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1089628213]
+unique_name_in_owner = true
+stream = ExtResource("5_2mjmc")
+volume_db = -8.889
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

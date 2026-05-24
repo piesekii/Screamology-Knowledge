@@ -12,7 +12,8 @@ radius = 0.275
 height = 1.355
 
 [sub_resource type="Shader" id="Shader_onrkg"]
-code = "shader_type canvas_item;
+code = "
+hader_type canvas_item;
 
 render_mode unshaded;
 
@@ -87,18 +88,14 @@ void fragment() {
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_onrkg"]
+render_priority = 0
 shader = SubResource("Shader_onrkg")
-shader_parameter/enabled = true
-shader_parameter/dithering = true
-shader_parameter/colors = 8
-shader_parameter/dither_size = 2
 
 [sub_resource type="Theme" id="Theme_onrkg"]
 default_font = ExtResource("2_onrkg")
 
 [sub_resource type="GDScript" id="GDScript_onrkg"]
-script/source = "@tool
-extends RichTextLabel
+script/source = "extends RichTextLabel
 
 const MESSAGES_SECOND_DAY: Array[Dictionary] = [
 	{ \"text\": \"You recieve the money from the job.[color=green] TY$[money][/color] \\n\\n TY$[money]\", \"amount\": 0 },
@@ -124,13 +121,18 @@ func get_current_day_message() -> void:
 			pass
 		2:
 			current_day_message = MESSAGES_SECOND_DAY
-
+@onready var animation_player_screen: AnimationPlayer = $\"../LabelText/AnimationPlayerScreen\"
+var already_played := false
 func _next() -> void:
 	if _animating:
 		return
 	_step += 1
 	if _step < current_day_message.size():
+		already_played = false
 		_show_step()
+	elif !already_played:
+		already_played = true
+		animation_player_screen.play_backwards(\"rest\")
 
 func _show_step() -> void:
 	var entry  : Dictionary = current_day_message[_step]
@@ -257,22 +259,34 @@ This is your first day at work.
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("../LabelEachDay:modulate")
+tracks/6/path = NodePath("../LabelEachDay:visible")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0)]
+"values": [false]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("../LabelEachDay:visible")
+tracks/7/path = NodePath("../LabelEachDay:modulate")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -361,26 +375,38 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("..:modulate")
+tracks/2/path = NodePath("../LabelEachDay:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("..:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0, 2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("../LabelEachDay:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_onrkg"]
@@ -437,6 +463,30 @@ This is your first day at work.
 
 [F]"]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../LabelEachDay:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i3pqv"]
 _data = {
@@ -479,6 +529,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRectNoBG" type="ColorRect" parent="CanvasLayer" unique_id=2129457401]
 z_index = -1
@@ -504,6 +555,7 @@ offset_right = 421.5
 offset_bottom = 302.75
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = SubResource("Theme_onrkg")
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
@@ -519,6 +571,7 @@ horizontal_alignment = 1
 script = SubResource("GDScript_onrkg")
 
 [node name="LabelText" type="Label" parent="CanvasLayer/ColorRectNoBG" unique_id=119403795]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -582,3 +635,5 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 24
 theme_override_font_sizes/font_size = 34
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1218525631]

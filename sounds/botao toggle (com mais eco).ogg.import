@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cpfy4dd0aavr"
+path="res://.godot/imported/botao toggle (com mais eco).ogg-13c9f729640cb33ce8af07f61da2dc09.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/botao toggle (com mais eco).ogg"
+dest_files=["res://.godot/imported/botao toggle (com mais eco).ogg-13c9f729640cb33ce8af07f61da2dc09.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

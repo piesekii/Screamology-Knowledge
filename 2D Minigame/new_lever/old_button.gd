@@ -71,10 +71,15 @@ func _handle_lever() -> void:
 				CONNECT_ONE_SHOT
 			)
 
+@onready var audio_stream_player_3d: AudioStreamPlayer3D = %AudioStreamPlayer3D
 func _handle_button() -> void:
+	if animation_player.is_playing():
+		return
 	interacted.emit()
 	animation_player.play(ANIM_PRESSED)
-
+	if audio_stream_player_3d != null:
+		audio_stream_player_3d.pitch_scale = randf_range(0.9, 1.1)
+		audio_stream_player_3d.play()
 func _play_pressed() -> void:
 	animation_player.play(ANIM_PRESSED)
 	last_animation = ANIM_PRESSED

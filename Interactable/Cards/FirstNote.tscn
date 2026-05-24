@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d35brhwr2g1rg" path="res://Room/textures/SB022.JPG" id="3_s34av"]
 [ext_resource type="Texture2D" uid="uid://dx2expgcoyrrx" path="res://Room/Room_InstructionsFirstDay.png" id="4_q6yjv"]
 [ext_resource type="Texture2D" uid="uid://dgxvbwjamdxcl" path="res://Room/textures/SC097.JPG" id="4_ylv5o"]
+[ext_resource type="AudioStream" uid="uid://wmrnj8p7n5y5" path="res://sounds/papel.ogg" id="5_w6sws"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qgxf6"]
 size = Vector3(0.40655518, 0.055664063, 0.30523682)
@@ -146,3 +147,8 @@ blend_shapes/Pinned = 0.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1772534213]
 libraries/ = SubResource("AnimationLibrary_j0oem")
+
+[node name="AudioListener3D" type="AudioStreamPlayer3D" parent="." unique_id=226999170]
+unique_name_in_owner = true
+stream = ExtResource("5_w6sws")
+volume_db = -24.443

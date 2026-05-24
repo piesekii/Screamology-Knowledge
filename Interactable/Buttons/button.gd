@@ -44,11 +44,13 @@ func _handle_turn_key() -> void:
 		key_turned = true
 		animation_player.play("TurnKey")
 		print("Chave girada!")
+		%AudioStreamPlayer3D2.play()
 	else:
 		print("Trancado. Você precisa de uma chave.")
 		# Aqui você poderia tocar um som de "trancado" ou feedback visual
 
 func _handle_pull_lever() -> void:
+	%AudioStreamPlayer3D.play()
 	lever_pulled = true
 	animation_player.play("PullLever")
 	
