@@ -29,13 +29,19 @@ var gravity = 9.8
 
 var is_reading := true
 @onready var label_each_day: RichTextLabel = $CanvasLayer/ColorRectNoBG/LabelEachDay
+const TESTE = preload("uid://ppx7hmjh60np")
+const NIGHTS = preload("uid://buskxe133sqwx")
 
+@onready var animation_player: AnimationPlayer = $CanvasLayer/AnimationPlayer
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	GlobalScript.sleep_signal.connect(play_sleep)
+	DialogueManager.show_dialogue_balloon(TESTE)
+	DialogueManager.dialogue_ended.connect(func(A): animation_player.play("black_screen_off"))
 func play_sleep():
-	animation_player_screen.play("rest")
+	DialogueManager.show_dialogue_balloon(NIGHTS)
+	#animation_player_screen.play("rest")
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 		head.rotate_y(-event.relative.x * SENSITIVITY)
@@ -45,12 +51,6 @@ func _unhandled_input(event):
 var last_collider: Object = null
 
 func _process(_delta: float) -> void:
-	if label_each_day.visible:
-		if Input.is_action_just_pressed("interact"):
-			label_each_day._next()
-		return
-	label_interact.text = GlobalScript.label_interact
-	
 	var collider = ray_cast_3d.get_collider() if ray_cast_3d.is_colliding() else null
 	
 	if Input.is_action_just_pressed("interact") and collider != null and collider.is_in_group("interactable"):
@@ -64,10 +64,6 @@ func _process(_delta: float) -> void:
 		else:
 			last_collider = null
 	
-	if is_reading:
-		if Input.is_action_just_pressed("F"):
-			animation_player_screen.play("hide")
-			is_reading = false
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():

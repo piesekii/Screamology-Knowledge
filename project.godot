@@ -12,7 +12,7 @@ config_version=5
 
 config/name="ScreamologyKnowledge"
 run/main_scene="uid://cloe6dnlinajc"
-config/features=PackedStringArray("4.6", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -20,10 +20,11 @@ config/icon="res://icon.svg"
 GlobalScript="*uid://bmusts0bpmfa7"
 GameOverScreen="*uid://c6ll3d11pkl8l"
 PhantomCameraManager="*uid://duq6jhf6unyis"
+DialogueManager="*uid://c3rodes2l3gxb"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
 
 [global_group]
 
@@ -74,6 +75,10 @@ F={
 ]
 }
 
+[internationalization]
+
+locale/translations_pot_files=PackedStringArray("res://Dialogos/teste.dialogue", "res://Dialogos/nights.dialogue", "res://Dialogos/final.dialogue")
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
@@ -81,5 +86,3 @@ F={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"

@@ -1,0 +1,8 @@
+~ start
+match GlobalScript.current_day:
+	when 2:
+		This was your first night here.
+		Blablabla
+	when 3:
+		This was your second night here.
+=> END

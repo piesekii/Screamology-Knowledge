@@ -4,9 +4,11 @@ extends Area3D
 @export var is_enabled := true
 @export var outline: MeshInstance3D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-
+@export var activate_once := false
 signal interacted
 
+signal signal_key_turn 
+signal signal_lever_pushed
 # Estados da alavanca
 var key_turned := false
 var lever_pulled := false
@@ -15,7 +17,6 @@ var _initial_enabled := true
 func _ready() -> void:
 	_initial_enabled = is_enabled
 	GlobalScript.sleep_signal.connect(_reset_lever_state)
-
 func activate() -> void:
 	is_enabled = true
 
@@ -34,20 +35,18 @@ func interact(_body: CharacterBody3D) -> void:
 	# PASSO 1: Girar a Chave
 	if not key_turned:
 		_handle_turn_key()
+		signal_key_turn.emit()
 	# PASSO 2: Puxar a Alavanca (Só se a chave já foi girada)
 	else:
+		signal_lever_pushed.emit()
 		_handle_pull_lever()
+		
 
 func _handle_turn_key() -> void:
-	# Checa no seu GlobalScript se o jogador tem a chave
-	if GlobalScript.get("HasKey"): # Usando get para evitar erro caso a variável mude
-		key_turned = true
-		animation_player.play("TurnKey")
-		print("Chave girada!")
-		%AudioStreamPlayer3D2.play()
-	else:
-		print("Trancado. Você precisa de uma chave.")
-		# Aqui você poderia tocar um som de "trancado" ou feedback visual
+	key_turned = true
+	animation_player.play("TurnKey")
+	%AudioStreamPlayer3D2.play()
+
 
 func _handle_pull_lever() -> void:
 	%AudioStreamPlayer3D.play()

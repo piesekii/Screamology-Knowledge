@@ -114,6 +114,13 @@ tracks/0/path = NodePath("lever_rig/Skeleton3D:Key")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array(0, 1, -2.6692543e-08, -2.6692543e-08, -0.7071068, 0.7071068)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("lever_rig/Skeleton3D:Lever")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_m6duh"]
 resource_name = "ShowKey"

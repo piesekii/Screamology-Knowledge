@@ -3,7 +3,7 @@ extends StaticBody3D
 @onready var outline: MeshInstance3D = $outline
 @onready var anim: AnimationPlayer = $AnimationPlayer
 
-@onready var mmesh: MeshInstance3D = $Plane2
+@export var mmesh: MeshInstance3D
 var pplayer : CharacterBody3D
 var scene_original_parent
 var picked_up : bool = false:

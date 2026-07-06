@@ -48,7 +48,17 @@ func _generate_symbols() -> void:
 		while true:
 			if GlobalScript.current_day == 1:
 				pick = randi_range(1, 2)
-			else:
+			elif GlobalScript.current_day == 2:
+				pick = randi_range(1,2)
+			elif GlobalScript.current_day == 3:
+				pick = randi_range(1,2)
+			elif GlobalScript.current_day == 4:
+				pick = randi_range(1,3)
+			elif GlobalScript.current_day == 5:
+				pick = randi_range(1,4)
+			elif GlobalScript.current_day == 6:
+				pick = randi_range(1,4)
+			elif GlobalScript.current_day == 7:
 				pick = randi_range(1,4)
 			if pick == 4 and triangle_used:
 				continue  # tenta de novo

@@ -127,9 +127,10 @@ _data = {
 &"pin_down": SubResource("Animation_k4vw5")
 }
 
-[node name="TheWayToStartYourDay" type="StaticBody3D" unique_id=2129975647 groups=["interactable"]]
+[node name="TheWayToStartYourDay" type="StaticBody3D" unique_id=2129975647 node_paths=PackedStringArray("mmesh") groups=["interactable"]]
 collision_layer = 2
 script = ExtResource("1_w6sws")
+mmesh = NodePath("Plane2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=968552063]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.067718506, 0.0043945313, 0.0008239746)

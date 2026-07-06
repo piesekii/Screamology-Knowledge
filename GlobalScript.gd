@@ -10,7 +10,6 @@ var quota_finished := false
 var quota_amount_needed := 10
 var quota_amount_reached := 0
 var lamp_ap : AnimationPlayer
-var HasKey := true
 var endComputerAnim : AnimationPlayer
 # --- signals ---
 signal quota_finished_signal
@@ -19,6 +18,11 @@ signal enviar_pressed
 signal descartar_pressed
 signal game_over_signal
 
+var esteira
+var minigame_activated :bool = false:
+	set(new_value):
+		minigame_activated = new_value
+		esteira.update_status()
 # --- inicializacao ---
 func _ready() -> void:
 	_setup_day(current_day)
@@ -38,8 +42,18 @@ func _setup_day(day: int) -> void:
 	# config especifica do dia
 	match day:
 		1:
-			quota_amount_needed = 1
+			quota_amount_needed = 3
 		2:
+			quota_amount_needed = 9
+		3:
+			quota_amount_needed = 9
+		4:
+			quota_amount_needed = 9
+		5:
+			quota_amount_needed = 12
+		6:
+			quota_amount_needed = 14
+		7:
 			quota_amount_needed = 15
 
 # --- pontuacao ---
@@ -76,9 +90,10 @@ func on_descartar() -> void:
 
 # --- game over / reset total ---
 func _trigger_game_over() -> void:
+	minigame_activated = false
 	game_over_signal.emit()
 	endComputerAnim.play("red_failing")
-	await get_tree().create_timer(15.0).timeout
+	await get_tree().create_timer(14.0).timeout
 	_full_reset()
 
 func _full_reset() -> void:

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://buskxe133sqwx"
+path="res://.godot/imported/nights.dialogue-5c687ab590c7303b8c17b719955ab44b.tres"
+
+[deps]
+
+source_file="res://Dialogos/nights.dialogue"
+dest_files=["res://.godot/imported/nights.dialogue-5c687ab590c7303b8c17b719955ab44b.tres"]
+
+[params]
+
+defaults=true

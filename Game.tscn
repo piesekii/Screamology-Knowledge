@@ -8,16 +8,16 @@
 [ext_resource type="Script" uid="uid://b2k8d6ct5ae5g" path="res://2D Minigame/validator/validator.gd" id="4_elkpi"]
 [ext_resource type="PackedScene" uid="uid://by8kuy8a31jx5" path="res://Interactable/Buttons/button_blue.tscn" id="4_t88pq"]
 [ext_resource type="PackedScene" uid="uid://8k5ah3um02p4" path="res://Interactable/Buttons/button_red.tscn" id="5_r0x5m"]
-[ext_resource type="Script" path="res://esteiranew.gd" id="9_hmewc"]
+[ext_resource type="Script" uid="uid://dmmumaci44krg" path="res://esteiranew.gd" id="9_hmewc"]
 [ext_resource type="PackedScene" uid="uid://cf2yced265gsh" path="res://Item.tscn" id="10_7ged1"]
 [ext_resource type="Shader" uid="uid://cl1ahtmkfkfp4" path="res://2D Minigame/esteira/MoverEsteira.gdshader" id="11_cpsxm"]
 [ext_resource type="Texture2D" uid="uid://cq2vxyrcqkfin" path="res://2D Minigame/esteira/EsteiraClip.png" id="12_hmewc"]
 [ext_resource type="Texture2D" uid="uid://cyac1jvakif3y" path="res://2D Minigame/gear/tex_red.png" id="13_7ged1"]
+[ext_resource type="AudioStream" uid="uid://cjybtq5gqiwfy" path="res://sounds/pc ligado.ogg" id="14_hwsgv"]
 [ext_resource type="FontFile" uid="uid://dvsjj425pqcue" path="res://Room/OldNewspaperTypes.ttf" id="15_0mevm"]
 [ext_resource type="PackedScene" uid="uid://b3b37n5icmuyl" path="res://2D Minigame/validator/validator.tscn" id="15_elkpi"]
-[ext_resource type="PackedScene" uid="uid://c2dshnv4nw6yd" path="res://Interactable/Levers/lever_red.tscn" id="15_qjyg3"]
 [ext_resource type="AudioStream" uid="uid://f24dt2hwf726" path="res://sounds/certo (som prazeroso).ogg" id="15_w7ht3"]
-[ext_resource type="AudioStream" uid="uid://buxee5e5j7uyu" path="res://sounds/errado (sirene).ogg" id="16_8ktx7"]
+[ext_resource type="AudioStream" uid="uid://vhe3s5ccywmo" path="res://sounds/errado (sirene) com gas [old version].ogg" id="16_8ktx7"]
 [ext_resource type="PackedScene" uid="uid://dxsg438aj6wck" path="res://Interactable/Levers/lever_green.tscn" id="16_elkpi"]
 [ext_resource type="PackedScene" uid="uid://fh6dd511awvd" path="res://Room/bed.tscn" id="18_wuoie"]
 [ext_resource type="Script" uid="uid://mmuqsvb34jou" path="res://2D Minigame/new_lever/old_button.gd" id="19_w2501"]
@@ -29,6 +29,27 @@
 [ext_resource type="PackedScene" uid="uid://boh26wp1cx3dc" path="res://Room/fan.tscn" id="25_jsoai"]
 [ext_resource type="AudioStream" uid="uid://ddbgdmq33fhrj" path="res://sounds/ambience.ogg" id="26_bisgb"]
 [ext_resource type="AudioStream" uid="uid://cniymlwi5cggo" path="res://sounds/textura tecido.ogg" id="27_y5ctq"]
+
+[sub_resource type="GDScript" id="GDScript_hwsgv"]
+script/source = "extends Node3D
+
+const SECOND_LETTER = preload(\"uid://qwx5r3meoxkl\")
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	GlobalScript.sleep_signal.connect(_spawn_things)
+
+func _spawn_things() ->void:
+	match GlobalScript.current_day:
+		2:
+			var new_second_letter : Node3D = SECOND_LETTER.instantiate()
+			new_second_letter.global_position = Vector3(-0.017, 0.967, 1.321)
+			new_second_letter.rotation_degrees = Vector3(0.0, -90.0, 90.0)
+			add_child(new_second_letter)
+
+func _process(delta: float) -> void:
+	pass
+"
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xkndl"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -42,30 +63,36 @@ sky = SubResource("Sky_u44n3")
 tonemap_mode = 2
 ssr_enabled = true
 ssao_enabled = true
+ssao_intensity = 5.7
 ssil_enabled = true
+ssil_intensity = 0.75
+ssil_sharpness = 1.0
+sdfgi_use_occlusion = true
+sdfgi_y_scale = 2
 fog_enabled = true
 fog_light_color = Color(0.6993718, 0.66082895, 0.43350953, 1)
 fog_light_energy = 0.25
+volumetric_fog_enabled = true
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_hmewc"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_rs3vk"]
 viewport_path = NodePath("Okaynator/OkaynatorScreen/SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ged1"]
 resource_local_to_scene = true
-albedo_texture = SubResource("ViewportTexture_hmewc")
+albedo_texture = SubResource("ViewportTexture_rs3vk")
 
 [sub_resource type="QuadMesh" id="QuadMesh_0mevm"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_7ged1")
 size = Vector2(3.23, 1.34)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_lvtmh"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_q5i7t"]
 viewport_path = NodePath("Validator/ValidatorScreen/SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r0x5m"]
 resource_local_to_scene = true
 albedo_color = Color(0.8217887, 0.82178867, 0.82178867, 1)
-albedo_texture = SubResource("ViewportTexture_lvtmh")
+albedo_texture = SubResource("ViewportTexture_q5i7t")
 
 [sub_resource type="QuadMesh" id="QuadMesh_t88pq"]
 resource_local_to_scene = true
@@ -148,6 +175,42 @@ tracks/4/keys = {
 "update": 0,
 "values": [Color(0.02745098, 0.2627451, 0, 0)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../EndedQuota/FogVolume:size")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(2, 0.3359375, 2)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../EndedQuota/FogVolume:material:density")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../EndedQuota/FogVolume:material:albedo")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0.6696853, 0.29631406, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_w7ht3"]
 resource_name = "dailyReset"
@@ -191,7 +254,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_hwsgv"]
 resource_name = "notokquotaEnded"
-length = 5.0
+length = 19.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -232,6 +295,42 @@ ENJOY YOU REST", "FAILURE IN COMPLAING
 COMPANY RULE
 WAIT FOR TERMINATION
 IN YOUR ROOM"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../EndedQuota/FogVolume:size")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(2, 0.3359375, 2), Vector3(3.11, 3.3, 3.7)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../EndedQuota/FogVolume:material:density")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 3.225199999999999]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../EndedQuota/FogVolume:material:albedo")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0.6696853, 0.29631406, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_bisgb"]
@@ -288,13 +387,83 @@ tracks/3/keys = {
 "values": [Color(0.02745098, 0.2627451, 0, 0), Color(0.34753472, 0.530715, 0, 1), Color(0.13695478, 0.39498663, 0, 1), Color(0.23704123, 0.37399802, 0.16450706, 1), Color(4.6927482e-07, 0.40386987, 0.0074614217, 1), Color(0.22423232, 0.37997437, 0.0053042974, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_5he1h"]
+resource_name = "resetNightly"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../SubViewport/Label:theme_override_colors/font_color")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.03333336),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../SubViewport/Label:theme_override_colors/font_outline_color")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.03333336),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../SubViewport/Label:text")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["GOOD JOB
+DAILY QUOTA REACHED
+ENJOY YOU REST"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../SubViewport/ColorRect:color")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.02745098, 0.2627451, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../ComputerScreen:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y5ctq"]
 _data = {
 &"RESET": SubResource("Animation_y5ctq"),
 &"dailyReset": SubResource("Animation_w7ht3"),
 &"notokquotaEnded": SubResource("Animation_hwsgv"),
-&"okquotaEnded": SubResource("Animation_bisgb")
+&"okquotaEnded": SubResource("Animation_bisgb"),
+&"resetNightly": SubResource("Animation_5he1h")
 }
+
+[sub_resource type="FogMaterial" id="FogMaterial_8ktx7"]
+albedo = Color(0, 0.6696853, 0.29631406, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yx171"]
 shader = ExtResource("11_cpsxm")
@@ -306,6 +475,12 @@ size = Vector2(297.342, 101.35134)
 
 [sub_resource type="Theme" id="Theme_w2501"]
 default_font = ExtResource("15_0mevm")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8ktx7"]
+size = Vector3(0.8256836, 0.56396484, 0.6611328)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hwsgv"]
+size = Vector3(0.8156738, 0.1706543, 0.6611328)
 
 [sub_resource type="Animation" id="Animation_0mevm"]
 length = 0.001
@@ -444,15 +619,25 @@ _data = {
 [sub_resource type="GDScript" id="GDScript_hmewc"]
 script/source = "extends AnimationPlayer
 
+@onready var red_failing: AudioStreamPlayer3D = $red_failing
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	GlobalScript.game_over_signal.connect(_ueueueun)
 	GlobalScript.lamp_ap = self
 	
 @onready var green: AudioStreamPlayer3D = $green
 
+func _ueueueun() -> void:
+	red_failing.play()
+var last_tracked_day: int = 1
+
 func _play_green() -> void:
+	if GlobalScript.current_day != last_tracked_day:
+		green.pitch_scale = 1.0
+		last_tracked_day = GlobalScript.current_day 
 	green.pitch_scale += 0.05
+	
 	green.play()
 	
 @onready var red: AudioStreamPlayer3D = $red
@@ -612,10 +797,10 @@ _data = {
 }
 
 [sub_resource type="GDScript" id="GDScript_bisgb"]
-script/source = "extends AudioStreamPlayer
+script/source = "extends AudioStreamPlayer3D
 
 
-func _play() -> void:
+func _ready() -> void:
 	play(randi_range(1,20))
 "
 
@@ -685,6 +870,7 @@ _data = {
 }
 
 [node name="Game" type="Node3D" unique_id=1933016586]
+script = SubResource("GDScript_hwsgv")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1445383312]
 environment = SubResource("Environment_sb48q")
@@ -810,12 +996,17 @@ mesh = SubResource("QuadMesh_yyih5")
 root_node = NodePath("../SubViewportContainer")
 libraries/ = SubResource("AnimationLibrary_y5ctq")
 
+[node name="FogVolume" type="FogVolume" parent="Computer/EndedQuota" unique_id=1723776006]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6612938, 0.19490701, 0.32995605)
+size = Vector3(2, 0.3359375, 2)
+material = SubResource("FogMaterial_8ktx7")
+
 [node name="SubViewport" type="SubViewport" parent="Computer" unique_id=1114381380]
 handle_input_locally = false
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
-[node name="esteira" type="Area2D" parent="Computer/SubViewport" unique_id=818956301 node_paths=PackedStringArray("spawn_point", "end_point", "esteira_sprite", "button_blue", "button_red", "lever_base")]
+[node name="esteira" type="Area2D" parent="Computer/SubViewport" unique_id=818956301 node_paths=PackedStringArray("spawn_point", "end_point", "esteira_sprite", "button_blue", "button_red")]
 position = Vector2(581.00006, 480)
 scale = Vector2(5.7374997, 2.22)
 script = ExtResource("9_hmewc")
@@ -825,7 +1016,6 @@ end_point = NodePath("../SpawnPoint2")
 esteira_sprite = NodePath("esteira")
 button_blue = NodePath("../../../Interactable/button_blue")
 button_red = NodePath("../../../Interactable/button_red")
-lever_base = NodePath("../../../Interactable/lever_red")
 
 [node name="esteira" type="Sprite2D" parent="Computer/SubViewport/esteira" unique_id=1327133478]
 z_index = -1
@@ -897,6 +1087,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Computer" unique_id=1826200730]
+transform = Transform3D(0.82304525, 0, 0, 0, 0.82304525, 0, 0, 0, 0.82304525, 0, 0.24844536, 0)
+stream = ExtResource("14_hwsgv")
+volume_db = -26.659
+unit_size = 6.5
+panning_strength = 0.87
+parameters/looping = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Computer" unique_id=1329708142]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Computer/StaticBody3D" unique_id=1726740480]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08715819, 0.29809573, 0.1694336)
+shape = SubResource("BoxShape3D_8ktx7")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Computer/StaticBody3D" unique_id=637512838]
+transform = Transform3D(1, 0, 0, 0, 0.9029982, -0.4296445, 0, 0.4296445, 0.9029982, 0.0821533, -0.0525226, 0.09917438)
+shape = SubResource("BoxShape3D_hwsgv")
+
 [node name="lampAP" type="AnimationPlayer" parent="." unique_id=496529248]
 root_node = NodePath("lamp1")
 libraries/ = SubResource("AnimationLibrary_jsoai")
@@ -931,7 +1139,7 @@ omni_range = 9.225
 [node name="green" type="AudioStreamPlayer3D" parent="lampAP" unique_id=822285208]
 stream = ExtResource("15_w7ht3")
 
-[node name="red" type="AudioStreamPlayer3D" parent="lampAP" unique_id=1885332173]
+[node name="red_failing" type="AudioStreamPlayer3D" parent="lampAP" unique_id=1885332173]
 stream = ExtResource("16_8ktx7")
 
 [node name="Interactable" type="Node3D" parent="." unique_id=315798008]
@@ -953,14 +1161,6 @@ rotation_edit_mode = 1
 script = ExtResource("19_w2501")
 deactivate_after_quota = false
 is_lever = true
-lever_starts_up = false
-
-[node name="lever_red" parent="Interactable" unique_id=1769844084 instance=ExtResource("15_qjyg3")]
-transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 0.24612659, 1.1545382, -1.480133)
-script = ExtResource("19_w2501")
-deactivate_after_quota = false
-is_lever = false
-is_enabled = false
 lever_starts_up = false
 
 [node name="Bed" parent="Interactable" unique_id=590706542 instance=ExtResource("18_wuoie")]
@@ -1004,10 +1204,11 @@ offset_top = -11.0
 offset_right = 1167.0
 offset_bottom = 664.0
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer" parent="." unique_id=1552126365]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=377213975]
 stream = ExtResource("26_bisgb")
 volume_db = -80.0
-autoplay = true
+unit_size = 100.0
+panning_strength = 0.0
 parameters/looping = true
 script = SubResource("GDScript_bisgb")
 
@@ -1019,8 +1220,7 @@ autoplay = true
 libraries/ = SubResource("AnimationLibrary_202ut")
 autoplay = &"começo_audio"
 
-[connection signal="interacted" from="Interactable/lever_green" to="Computer" method="_on_lever_green_interacted"]
-[connection signal="interacted" from="Interactable/lever_green" to="Interactable/lever_red" method="activate"]
-[connection signal="interacted" from="Interactable/lever_red" to="Computer" method="_on_lever_red_interacted"]
+[connection signal="signal_key_turn" from="Interactable/lever_green" to="Computer" method="_on_lever_green_signal_key_turn"]
+[connection signal="signal_lever_pushed" from="Interactable/lever_green" to="Computer" method="_on_lever_green_signal_lever_pushed"]
 
 [editable path="rooflamp"]

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ckfv03f5vgp0g"
+path="res://.godot/imported/apex menu.ogg-bb5f4972ff81efc8b0889c3b18aee57a.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/apex menu.ogg"
+dest_files=["res://.godot/imported/apex menu.ogg-bb5f4972ff81efc8b0889c3b18aee57a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

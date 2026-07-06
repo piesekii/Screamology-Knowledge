@@ -1,0 +1,8 @@
+~ start
+#You have been selected through a public recruitment process to work at a major technology company of great importance to the country, in a department known as “CURADORIA.” 
+#It is an honor. 
+#You will live on company premises and send money to your family at the end of the workday. 
+#You will feel genuine pride in what you do, helping your nation advance technologically. 
+#This is your first day at work.
+- Begin your first day at work => END
+=> END

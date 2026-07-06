@@ -22,11 +22,13 @@ func _ready():
 	
 	if _grab_focus:
 		grab_focus()
+@onready var audio_stream_player: AudioStreamPlayer = $"../../../../../../../AudioStreamPlayer"
 
 func _on_hover():
 	if selected:
 		return
-	
+	audio_stream_player.pitch_scale = randi_range(0.6,1.4)
+	audio_stream_player.play()
 	create_tween()\
 		.set_trans(Tween.TRANS_BACK)\
 		.set_ease(Tween.EASE_OUT)\

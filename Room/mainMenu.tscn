@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="16_dck04"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="17_w1sat"]
 [ext_resource type="Script" uid="uid://cuffvge5ad4aa" path="res://addons/phantom_camera/scripts/resources/phantom_camera_noise_3d.gd" id="19_4qo4c"]
+[ext_resource type="AudioStream" uid="uid://ckfv03f5vgp0g" path="res://sounds/apex menu.ogg" id="20_h7n70"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xkndl"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -380,6 +381,7 @@ func _unhandled_input(event):
 
 	node_viewport.push_input(event)
 
+@onready var audio_stream_player: AudioStreamPlayer = $\"../AudioStreamPlayer\"
 
 func _mouse_input_event(
 	_camera: Camera3D,
@@ -391,7 +393,7 @@ func _mouse_input_event(
 	# ignora completamente se mouse não estiver encima
 	if !is_mouse_inside:
 		return
-
+	
 	var quad_mesh_size = node_quad.mesh.size
 	var event_pos3D = event_position
 
@@ -416,14 +418,15 @@ func _mouse_input_event(
 
 	if event is InputEventMouse:
 		event.global_position = event_pos2D
-
+		
 	if event is InputEventMouseMotion or event is InputEventScreenDrag:
 		if last_event_pos2D == null:
 			event.relative = Vector2.ZERO
+			
 		else:
 			event.relative = event_pos2D - last_event_pos2D
 			event.velocity = event.relative / (now - last_event_time)
-
+			
 	last_event_pos2D = event_pos2D
 	last_event_time = now
 
@@ -432,7 +435,7 @@ func _mouse_input_event(
 
 func rotate_area_to_billboard():
 	var billboard_mode = node_quad.get_surface_override_material(0).params_billboard_mode
-
+	
 	if billboard_mode > 0:
 		var camera = get_viewport().get_camera_3d()
 
@@ -444,7 +447,7 @@ func rotate_area_to_billboard():
 
 		node_area.look_at(look, Vector3.UP)
 		node_area.rotate_object_local(Vector3.BACK, camera.rotation.z)
-
+		
 
 func _on_button_quit_pressed() -> void:
 	get_tree().quit()
@@ -733,7 +736,7 @@ script = SubResource("GDScript_u2isg")
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="GUIPanel3D/CameraWork" unique_id=1522432093]
-transform = Transform3D(-0.96633935, -0.00048531944, -0.25727075, -0.0009671362, 0.99999803, 0.0017462666, 0.25726938, 0.0019363018, -0.9663379, -2.382442, 0.5819919, -0.6127088)
+transform = Transform3D(-0.9648419, 0.0063236365, -0.262755, 0.007531865, 0.9999652, -0.0035913412, 0.26272315, -0.005444112, -0.9648559, -2.382442, 0.5819919, -0.6127088)
 top_level = true
 
 [node name="PhantomCameraHost" type="Node" parent="GUIPanel3D/CameraWork/Camera3D" unique_id=1658254185]
@@ -938,6 +941,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1785405088]
+stream = ExtResource("20_h7n70")
+volume_db = -4.821
 
 [connection signal="pressed" from="GUIPanel3D/MM/SubViewport_menu/Control/MainContainer/VBoxContainer/Button_start" to="GUIPanel3D/Start" method="_on_button_start_pressed"]
 [connection signal="pressed" from="GUIPanel3D/MM/SubViewport_menu/Control/MainContainer/VBoxContainer/Button_credits" to="GUIPanel3D/Credits" method="_on_button_credits_pressed"]

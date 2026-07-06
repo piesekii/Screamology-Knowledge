@@ -2,7 +2,6 @@ extends MeshInstance3D
 
 @onready var computer_screen: MeshInstance3D = $ComputerScreen
 @onready var ended_quota: AnimationPlayer = $EndedQuota
-@onready var lever_red = $"../Interactable/lever_red"
 @onready var lever_yellow = $"../Interactable/lever_yellow"
 @onready var glitch_overlay: Sprite2D = $SubViewport/GlitchOverlay
 @onready var lamp_ap: AnimationPlayer = $"../lampAP"
@@ -48,7 +47,8 @@ func _process(delta: float) -> void:
 			_start_glitch()
 
 func _reset_sleep() -> void:
-	ended_quota.play_backwards("dailyReset")
+	$AudioStreamPlayer3D.stop()
+	ended_quota.play_backwards("resetNightly")
 	minigame_active = false
 	is_screen_glitched = false
 	glitch_overlay.modulate.a = 0.0
@@ -67,15 +67,6 @@ func failure_screen() -> void:
 	lightroof_ap.play("rooflamp_off")
 	await get_tree().create_timer(14.0).timeout
 	end_screen.play("end_screen")
-func _on_lever_green_interacted() -> void:
-	computer_screen.visible = true
-	lever_red.activate()
-
-# conectar no editor: lever_red.interacted -> Computer._on_lever_red_interacted
-func _on_lever_red_interacted() -> void:
-	minigame_active = true
-	_check_timer = 0.0
-
 # --- glitch / trava ---
 func _start_glitch() -> void:
 	is_screen_glitched = true
@@ -108,3 +99,15 @@ func _end_glitch() -> void:
 		lever_yellow.is_enabled = false
 	var tw := create_tween()
 	tw.tween_property(glitch_overlay, "modulate:a", 0.0, 0.5)
+
+@onready var esteira: Area2D = $SubViewport/esteira
+
+func _on_lever_green_signal_lever_pushed() -> void:
+	GlobalScript.minigame_activated = true
+	minigame_active = true
+	_check_timer = 0.0
+	$AudioStreamPlayer3D.play()
+	#print("ativa esteira")
+func _on_lever_green_signal_key_turn() -> void:
+	computer_screen.visible = true
+	#print("liga o pc")

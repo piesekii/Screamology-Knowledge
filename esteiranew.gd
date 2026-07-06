@@ -20,22 +20,26 @@ var activated: bool = false:
 			_spawn_timer = 0.0
 
 func _ready() -> void:
+	GlobalScript.esteira = self
 	GlobalScript.sleep_signal.connect(_reset_sleep)
 	
 	if button_blue:
 		button_blue.interacted.connect(_on_button_blue_interacted)
 	if button_red:
 		button_red.interacted.connect(_on_button_red_interacted)
-	if lever_base:
-		lever_base.interacted.connect(_on_lever_base_interacted)
 
 func _process(delta: float) -> void:
+	
 	if not activated:
 		return
 	_spawn_timer -= delta
+	#print(_spawn_timer)
 	if _spawn_timer <= 0.0:
 		_spawn_timer = spawn_interval
 		_spawn_item()
+
+func update_status() -> void:
+	activated = GlobalScript.minigame_activated
 
 func _spawn_item() -> void:
 	var item = item_scene.instantiate()
@@ -70,13 +74,6 @@ func _resolve_first(send: bool) -> void:
 	var first = queue.pop_front()
 	first.resolve(send)
 	_update_highlight()
-
-func _on_lever_base_interacted() -> void:
-	activated = true
-
-# compat com chamadas antigas (ex: Computer.gd legado)
-func activate() -> void:
-	activated = true
 
 func _reset_sleep() -> void:
 	activated = false
